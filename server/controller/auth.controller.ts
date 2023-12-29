@@ -27,7 +27,7 @@ const generateAccessToken = (
     name,
   };
   const accessToken = sign(payload, process.env.ACCESS_TOKEN_SECRET!, {
-    expiresIn: "2m",
+    expiresIn: "1h",
   });
   return accessToken;
 };
@@ -93,8 +93,8 @@ export const handleLogin = async (
           httpOnly: true,
           secure: true,
           sameSite: "none",
-          maxAge: 24 * 60 * 60 * 1000,
-        });
+          maxAge: 24 * 60 * 60 * 1000
+        })
         res.status(200).json({
           status: "success",
           message: "Login success",
