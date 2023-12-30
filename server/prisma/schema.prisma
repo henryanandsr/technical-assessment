@@ -25,13 +25,21 @@ model Villa {
   short_description String
   description       String
   price             Int
-  image             String
   longitude         Float
   latitude          Float
   address           String
   amenities         String[]
   transactions      Transaction[]
+images            Image[]
 }
+
+model Image {
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  data     Bytes
+  villaId  String
+  villa    Villa    @relation(fields: [villaId], references: [id])
+}
+
 
 model Transaction {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId

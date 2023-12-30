@@ -10,7 +10,7 @@ const userRoutes = require("./routes/user.routes");
 const villaRoutes = require("./routes/villa.routes");
 const authRoutes = require("./routes/auth.routes");
 const corsOptions = {
-  origin: "http://localhost:3000", 
+  origin: "http://localhost:3000",
   credentials: true,
 };
 app.use(cors(corsOptions));
