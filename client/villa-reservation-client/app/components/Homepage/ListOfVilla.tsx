@@ -28,14 +28,18 @@ function ListOfVilla() {
 
   const displayImage = (imageData: number[]) => {
     const uint8Array = new Uint8Array(imageData);
-    const base64String = btoa(String.fromCharCode.apply(null, Array.from(uint8Array)));
+    const base64String = btoa(
+      String.fromCharCode.apply(null, Array.from(uint8Array))
+    );
     return `data:image/png;base64,${base64String}`;
   };
 
   return (
-    <div>
-      <h1>List of Villa</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg: grid-cols-3 gap-8">
+    <div className="m-4">
+      <h1 className="text-2xl font-bold text-center text-blue-500 mb-4">
+        List of Villa
+      </h1>{" "}
+      <div className="grid grid-cols-1 md:grid-cols-3">
         {villaData.map((villa) => (
           <div
             key={villa.id}

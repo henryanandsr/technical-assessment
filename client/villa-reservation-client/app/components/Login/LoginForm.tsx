@@ -1,4 +1,3 @@
-// LoginForm.tsx
 "use client";
 import handleLogin from "@/app/utils/auth";
 import React, { useState } from "react";
@@ -13,8 +12,7 @@ function LoginForm() {
     e.preventDefault();
     try {
       const res: any = await handleLogin(email, password);
-      console.log(res);
-      if (res.status === 200) {
+      if (res.status === "success") {
         router.push("/");
       }
     } catch (err) {
