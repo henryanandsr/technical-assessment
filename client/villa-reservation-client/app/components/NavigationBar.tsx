@@ -3,7 +3,8 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import Cookies from "js-cookie";
-
+import { handleLogout } from "@/app/utils/auth";
+import Link from "next/link";
 function NavigationBar() {
   const router = useRouter();
   const [loggedIn, setLoggedIn] = useState(false);
@@ -15,7 +16,8 @@ function NavigationBar() {
     const accessToken = Cookies.get("accessToken");
     if (accessToken) {
       // If the access token is present, fetch user info
-      axios.get(serverUrl, {withCredentials: true})
+      axios
+        .get(serverUrl, { withCredentials: true })
         .then((response) => {
           const res = response.data;
           setName(res.data.name);
@@ -27,13 +29,15 @@ function NavigationBar() {
     } else {
       setLoggedIn(false);
     }
-  }, []);
+  }, [loggedIn]);
 
-  const handleLogout = () => {
-    // Implement the logout logic (clear the access token, redirect, etc.)
-    localStorage.removeItem("accessToken");
-    setLoggedIn(false);
-    router.push("/login");
+  const handleLogoutButton = async () => {
+    const res = await handleLogout();
+    console.log(res);
+    if (res.status === "success") {
+      router.push("/");
+      setLoggedIn(false);
+    }
   };
 
   return (
@@ -46,17 +50,29 @@ function NavigationBar() {
         <div className="space-x-4">
           {loggedIn ? (
             <>
-              <a href="/villa" className="text-white hover:text-gray-300">Villa</a>
-              <a href="/booking" className="text-white hover:text-gray-300">Booking</a>
+              <Link href="/villa" className="text-white">
+                {/* <a className="text-white hover:text-gray-300">Villa</a> */}
+                Villa
+              </Link>
+              <Link href="/booking" className="text-white">
+                Booking
+              </Link>
               <span className="text-white">Welcome, {name}</span>
-              <button onClick={handleLogout} className="text-white hover:text-gray-300 cursor-pointer">
+              <button
+                onClick={handleLogoutButton}
+                className="text-white hover:text-gray-300 cursor-pointer"
+              >
                 Logout
               </button>
             </>
           ) : (
             <>
-              <a href="/login" className="text-white hover:text-gray-300">Sign In</a>
-              <a href="/register" className="text-white hover:text-gray-300">Sign Up</a>
+              <Link href="/login" className="text-white">
+                Sign In
+              </Link>
+              <Link href="/register" className="text-white">
+                Sign Up
+              </Link>
             </>
           )}
         </div>

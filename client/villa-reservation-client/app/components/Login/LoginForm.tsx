@@ -1,5 +1,5 @@
 "use client";
-import handleLogin from "@/app/utils/auth";
+import { handleLogin } from "@/app/utils/auth";
 import React, { useState } from "react";
 import Cookie from "js-cookie";
 import { useRouter } from "next/navigation";
