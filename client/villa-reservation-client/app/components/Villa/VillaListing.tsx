@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Link from "next/link";
 interface Villa {
   id: string;
   name: string;
@@ -66,21 +67,25 @@ function VillaListing() {
                 key={villa.id}
                 className="bg-white rounded-md overflow-hidden shadow-lg"
               >
-                {villa.images && villa.images.length > 0 && (
-                  <img
-                    src={displayImage(villa.images[0].data.data)}
-                    alt={villa.name}
-                    className="w-full h-48 object-cover"
-                  />
-                )}
+                <Link href={"villa/" + villa.id}>
+                  {villa.images && villa.images.length > 0 && (
+                    <img
+                      src={displayImage(villa.images[0].data.data)}
+                      alt={villa.name}
+                      className="w-full h-48 object-cover"
+                    />
+                  )}
+                </Link>
                 <div className="p-4">
-                  <h2 className="text-xl font-bold mb-2">{villa.name}</h2>
-                  <p className="text-gray-700 mb-2">
-                    {villa.short_description}
-                  </p>
-                  <p className="text-blue-500 font-bold">
-                    ${villa.price}/night
-                  </p>
+                  <Link href={"villa/" + villa.id}>
+                    <h2 className="text-xl font-bold mb-2">{villa.name}</h2>
+                    <p className="text-gray-700 mb-2">
+                      {villa.short_description}
+                    </p>
+                    <p className="text-blue-500 font-bold">
+                      ${villa.price}/night
+                    </p>
+                  </Link>
                   <button className="bg-blue-500 text-white px-4 py-2 rounded-md mt-4">
                     Book Now
                   </button>
