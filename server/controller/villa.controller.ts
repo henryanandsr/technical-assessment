@@ -97,6 +97,9 @@ export const getVillaById = async (req: Request, res: Response) => {
       where: {
         id: id,
       },
+      include: {
+        images: true,
+      },
     });
     res.status(200).json({
       status: "success",
@@ -152,49 +155,3 @@ export const updateVilla = async (req: Request, res: Response) => {
     });
   }
 };
-// export const getVillaImage = async (req: Request, res: Response) => {
-//   try {
-//     const villaId = req.params.id;
-//     console.log("Villa ID:", villaId);
-//     const villa = await prisma.villa.findUnique({
-//       where: {
-//         id: villaId,
-//       },
-//     });
-
-//     if (!villa) {
-//       res.status(404).json({
-//         status: "fail",
-//         message: "Villa not found",
-//       });
-//       return;
-//     }
-//     console.log("Villa:", villa);
-//     const filename = villa.imagesFiles[0].filename;
-//     console.log("Villa:", villa);
-//     console.log("Images Files:", villa.imagesFiles);
-
-//     // Use MongoDB driver to fetch and stream the image
-//     const bucket = new GridFSBucket(client.db(), {
-//       bucketName: "villa-reservation",
-//     });
-//     console.log("Bucket:", bucket);
-//     const downloadStream = bucket.openDownloadStreamByName(filename);
-//     downloadStream.once("finish", () => {
-//       console.log("done!");
-//     });
-//     console.log("==========");
-//     console.log(downloadStream);
-//     // Set response headers
-//     res.setHeader("Content-Type", "image/jpeg");
-//     res.setHeader("Content-Disposition", `inline; filename=${filename}`);
-//     console.log("res", res);
-//     // Pipe the image stream to the response
-//     downloadStream.pipe(res);
-//   } catch (error: any) {
-//     res.status(500).json({
-//       status: "error",
-//       message: error.message,
-//     });
-//   }
-// };
