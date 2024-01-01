@@ -12,7 +12,7 @@ const Home = () => {
           alt="Beautiful Landscape"
           className="mb-8 rounded-md shadow-lg w-full"
         />
-        < ListOfVilla />
+        <ListOfVilla />
     </>
   );
 };
