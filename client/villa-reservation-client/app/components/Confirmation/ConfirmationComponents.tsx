@@ -80,13 +80,15 @@ function ConfirmationComponents() {
     try {
       const res = await axios.put(
         process.env.SERVER_URL + "/api/transaction/confirm/" + transactionId,
+        {},
         { withCredentials: true }
       );
-      router.push("/booking")
+      router.push("/booking");
     } catch (error) {
       console.error("Error fetching transaction:", error);
     }
   };
+
   return (
     <>
       <div>ConfirmationComponents</div>

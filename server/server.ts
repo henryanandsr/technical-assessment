@@ -23,7 +23,7 @@ app.use(cookieParser());
 app.use("/api", userRoutes);
 app.use("/api", villaRoutes);
 app.use("/api", authRoutes);
-app.use("/api", verifyJWT);
+app.use(verifyJWT);
 app.use("/api", transactionRoutes);
 
 app.listen(PORT, () => {
