@@ -2,6 +2,7 @@ import "dotenv/config";
 import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import { verifyJWT } from "./middleware/verifyJWT";
 
 const app = express();
 const PORT = 8080;
@@ -22,6 +23,7 @@ app.use(cookieParser());
 app.use("/api", userRoutes);
 app.use("/api", villaRoutes);
 app.use("/api", authRoutes);
+app.use("/api", verifyJWT);
 app.use("/api", transactionRoutes);
 
 app.listen(PORT, () => {
