@@ -70,7 +70,11 @@ export const getTransactionById = async (req: Request, res: Response) => {
       },
       include: {
         user: true,
-        villa: true,
+        villa: {
+          include: {
+            images: true,
+          },
+        },
       },
     });
     res.status(200).json({
@@ -101,6 +105,57 @@ export const getTransactionByUserId = async (req: Request, res: Response) => {
     res.status(200).json({
       status: "success",
       message: "Transaction retrieved successfully",
+      data: transaction,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      status: "error",
+      message: error.message,
+    });
+  }
+};
+
+export const confirmTransaction = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const transaction = await prisma.transaction.update({
+      where: {
+        id: id,
+      },
+      data: {
+        confirmed: true,
+      },
+    });
+    res.status(200).json({
+      status: "success",
+      message: "Transaction confirmed successfully",
+      data: transaction,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      status: "error",
+      message: error.message,
+    });
+  }
+};
+export const updateTransaction = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const { numberOfGuests, checkIn, checkOut, price } = req.body;
+    const transaction = await prisma.transaction.update({
+      where: {
+        id: id,
+      },
+      data: {
+        numberOfGuests,
+        checkIn,
+        checkOut,
+        price,
+      },
+    });
+    res.status(200).json({
+      status: "success",
+      message: "Transaction updated successfully",
       data: transaction,
     });
   } catch (error: any) {
