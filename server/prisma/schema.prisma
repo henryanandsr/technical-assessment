@@ -30,25 +30,27 @@ model Villa {
   address           String
   amenities         String[]
   transactions      Transaction[]
-images            Image[]
+  images            Image[]
 }
 
 model Image {
-  id       String   @id @default(auto()) @map("_id") @db.ObjectId
-  data     Bytes
-  villaId  String
-  villa    Villa    @relation(fields: [villaId], references: [id])
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  data    Bytes
+  villaId String
+  villa   Villa  @relation(fields: [villaId], references: [id])
 }
 
-
 model Transaction {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  user      User     @relation(fields: [userId], references: [id])
-  userId    String
-  villa     Villa    @relation(fields: [villaId], references: [id])
-  villaId   String
-  checkIn   DateTime
-  checkOut  DateTime
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  user           User     @relation(fields: [userId], references: [id])
+  userId         String
+  villa          Villa    @relation(fields: [villaId], references: [id])
+  villaId        String
+  numberOfGuests Int
+  checkIn        DateTime
+  checkOut       DateTime
+  price          Int
+  confirmed      Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }

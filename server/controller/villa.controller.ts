@@ -2,13 +2,6 @@ import { PrismaClient } from "@prisma/client";
 import { Request, Response } from "express";
 import "dotenv/config";
 
-import {
-  MongoClient,
-  GridFSBucket,
-  GridFSBucketReadStream,
-  MongoClientOptions,
-} from "mongodb";
-
 const prisma = new PrismaClient();
 
 export const createVilla = async (req: Request, res: Response) => {
