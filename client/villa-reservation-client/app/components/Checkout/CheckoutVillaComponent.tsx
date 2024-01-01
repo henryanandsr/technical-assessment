@@ -82,7 +82,7 @@ function CheckoutVillaComponent() {
           { withCredentials: true }
         );
         console.log(res);
-        router.push("/villa/confirmation/" + res.data.data.id);
+        router.push("/booking/" + res.data.data.id);
       } catch (error) {
         console.error(error);
       }

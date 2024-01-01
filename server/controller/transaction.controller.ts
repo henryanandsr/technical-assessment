@@ -99,7 +99,11 @@ export const getTransactionByUserId = async (req: Request, res: Response) => {
       },
       include: {
         user: true,
-        villa: true,
+        villa: {
+          include: {
+            images: true,
+          },
+        },
       },
     });
     res.status(200).json({
