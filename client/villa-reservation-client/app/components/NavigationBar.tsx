@@ -1,11 +1,13 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import axios from "axios";
+import axiosPrivate from "@/app/utils/api";
 import Cookies from "js-cookie";
 import { handleLogout } from "@/app/utils/auth";
 import Link from "next/link";
+
 function NavigationBar() {
+  const axiosInstance = axiosPrivate();
   const router = useRouter();
   const [loggedIn, setLoggedIn] = useState(false);
   const [name, setName] = useState("");
@@ -14,21 +16,19 @@ function NavigationBar() {
     // Check if the user is logged in based on the presence of the access token
     const serverUrl = process.env.SERVER_URL + "/api/info";
     const accessToken = Cookies.get("accessToken");
-    if (accessToken) {
-      // If the access token is present, fetch user info
-      axios
-        .get(serverUrl, { withCredentials: true })
-        .then((response) => {
-          const res = response.data;
-          setName(res.data.name);
-          setLoggedIn(true);
-        })
-        .catch((error) => {
-          setLoggedIn(false);
-        });
-    } else {
-      setLoggedIn(false);
-    }
+
+    // If the access token is present, fetch user info
+    axiosInstance
+      .get(serverUrl, { withCredentials: true })
+      .then((response) => {
+        const res = response.data;
+        console.log("get info");
+        setName(res.data.name);
+        setLoggedIn(true);
+      })
+      .catch((error) => {
+        setLoggedIn(false);
+      });
   }, [loggedIn]);
 
   const handleLogoutButton = async () => {
