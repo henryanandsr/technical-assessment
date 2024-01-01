@@ -93,8 +93,8 @@ export const handleLogin = async (
           httpOnly: true,
           secure: true,
           sameSite: "none",
-          maxAge: 24 * 60 * 60 * 1000
-        })
+          maxAge: 24 * 60 * 60 * 1000,
+        });
         res.status(200).json({
           status: "success",
           message: "Login success",
@@ -126,7 +126,7 @@ export const handleGetInfo = async (
 ): Promise<void> => {
   const accessToken = req.cookies.accessToken;
   if (!accessToken) {
-    res.status(400).json({
+    res.status(403).json({
       status: "error",
       message: "Access token not found",
     });
@@ -148,12 +148,12 @@ export const handleGetInfo = async (
     });
   } catch (error) {
     if (error instanceof TokenExpiredError) {
-      res.status(400).json({
+      res.status(403).json({
         status: "error",
         message: "Access token expired",
       });
     } else if (error instanceof JsonWebTokenError) {
-      res.status(400).json({
+      res.status(403).json({
         status: "error",
         message: "Invalid access token",
       });
