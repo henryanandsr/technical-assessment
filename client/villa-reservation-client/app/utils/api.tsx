@@ -3,6 +3,7 @@ import axios from "axios";
 import useRefreshToken from "./refresh";
 
 const useAxiosPrivate = () => {
+  console.log("axios private");
   const refresh = useRefreshToken();
   console.log("satu");
   const axiosInstance = axios.create({
@@ -31,7 +32,7 @@ const useAxiosPrivate = () => {
     return () => {
       axiosInstance.interceptors.response.eject(interceptor);
     };
-  }, []);
+  }, [refresh]);
   return axiosInstance;
 };
 

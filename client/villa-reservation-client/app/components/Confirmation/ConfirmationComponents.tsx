@@ -1,7 +1,7 @@
 "use client";
-import axios from "axios";
+import useAxiosPrivate from "@/app/utils/api";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 
 interface Transaction {
   id: String;
@@ -34,6 +34,7 @@ interface User {
   name: string;
 }
 function ConfirmationComponents() {
+  const axiosInstance = useAxiosPrivate();
   const router = useRouter();
   const pathName = usePathname();
   const transactionId = pathName.split("/").pop();
@@ -41,7 +42,7 @@ function ConfirmationComponents() {
   useEffect(() => {
     const fetchTransaction = async () => {
       try {
-        const res = await axios.get(
+        const res = await axiosInstance.get(
           process.env.SERVER_URL + "/api/transaction/" + transactionId,
           { withCredentials: true }
         );
@@ -78,7 +79,7 @@ function ConfirmationComponents() {
   };
   const handleSubmit = async () => {
     try {
-      const res = await axios.put(
+      const res = await axiosInstance.put(
         process.env.SERVER_URL + "/api/transaction/confirm/" + transactionId,
         {},
         { withCredentials: true }

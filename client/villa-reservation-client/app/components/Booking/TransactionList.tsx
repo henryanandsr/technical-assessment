@@ -1,5 +1,5 @@
 "use client";
-import axios from "axios";
+import useAxiosPrivate from "@/app/utils/api";
 import Link from "next/link";
 import { use, useEffect, useState } from "react";
 interface Transaction {
@@ -29,13 +29,14 @@ interface Villa {
 }
 
 function TransactionList() {
+  const axiosInstance = useAxiosPrivate();
   const [userId, setUserId] = useState("");
   const [transaction, setTransaction] = useState<Transaction[]>([]);
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await axios.get(process.env.SERVER_URL + "/api/info", {
+        const res = await axiosInstance.get(process.env.SERVER_URL + "/api/info", {
           withCredentials: true,
         });
         const user = res.data.data;
@@ -52,7 +53,7 @@ function TransactionList() {
     const fetchTransaction = async () => {
       try {
         if (userId) {
-          const res = await axios.get(
+          const res = await axiosInstance.get(
             process.env.SERVER_URL + "/api/transaction/user/" + userId,
             { withCredentials: true }
           );

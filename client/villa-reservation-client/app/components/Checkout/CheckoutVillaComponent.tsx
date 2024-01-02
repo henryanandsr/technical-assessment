@@ -1,7 +1,7 @@
 "use client";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import useAxiosPrivate from "@/app/utils/api";
 
 interface Villa {
   id: string;
@@ -16,6 +16,7 @@ interface Villa {
   images: { filename: string; aliases: string[]; data: { data: number[] } }[];
 }
 function CheckoutVillaComponent() {
+  const axiosInstance = useAxiosPrivate();
   const router = useRouter();
   const usePathName = usePathname();
   const [villa, setVilla] = useState<Villa>();
@@ -31,7 +32,7 @@ function CheckoutVillaComponent() {
   useEffect(() => {
     const fetchVilla = async () => {
       try {
-        const res = await axios.get(uri, { withCredentials: true });
+        const res = await axiosInstance.get(uri, { withCredentials: true });
         setVilla(res.data.data);
         // console.log("res", res.data.data);
         // console.log("images", res.data.data.images);
@@ -76,7 +77,7 @@ function CheckoutVillaComponent() {
       };
       console.log("reservation", reservation);
       try {
-        const res = await axios.post(
+        const res = await axiosInstance.post(
           process.env.SERVER_URL + "/api/transaction",
           reservation,
           { withCredentials: true }
@@ -91,7 +92,7 @@ function CheckoutVillaComponent() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await axios.get(process.env.SERVER_URL + "/api/info", {
+        const res = await axiosInstance.get(process.env.SERVER_URL + "/api/info", {
           withCredentials: true,
         });
         setUserId(res.data.data.id);
