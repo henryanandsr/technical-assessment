@@ -1,6 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 interface Villa {
   id: string;
@@ -34,33 +37,60 @@ function ListOfVilla() {
     return `data:image/png;base64,${base64String}`;
   };
 
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          infinite: true,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
+
   return (
-    <div className="m-4">
-      <h1 className="text-2xl font-bold text-center text-blue-500 mb-4">
-        List of Villa
-      </h1>{" "}
-      <div className="grid grid-cols-1 md:grid-cols-3">
-        {villaData.map((villa) => (
-          <div
-            key={villa.id}
-            className="bg-white rounded-md overflow-hidden shadow-lg"
-          >
-            {villa.images && villa.images.length > 0 ? (
-              <img
-                src={displayImage(villa.images[0].data.data)}
-                alt={villa.name}
-                className="w-full h-48 object-cover"
-              />
-            ) : (
-              <div className="w-full h-48 bg-gray-300"></div>
-            )}
-            <div className="p-4">
-              <h2 className="text-xl font-bold mb-2">{villa.name}</h2>
-              <p className="text-gray-700 mb-2">{villa.short_description}</p>
-              <p className="text-blue-500 font-bold">${villa.price}/night</p>
+    <div className="bg-primary pb-2">
+      <div className="m-20">
+        <h1 className="text-5xl mb-7 pt-6 font-bold text-center text-white mb-4">
+          Our Villas
+        </h1>
+        <Slider {...settings}>
+          {villaData.map((villa) => (
+            <div
+              key={villa.id}
+              className="bg-white rounded-md overflow-hidden relative"
+            >
+              {villa.images && villa.images.length > 0 ? (
+                <img
+                  src={displayImage(villa.images[0].data.data)}
+                  alt={villa.name}
+                  className="w-full h-[75vh] object-cover"
+                />
+              ) : (
+                <div className="w-full h-48 bg-gray-300"></div>
+              )}
+              <div className="absolute bottom-0 left-0 p-4 bg-black bg-opacity-50 text-white w-full h-full flex flex-col justify-end items-center">
+                <h2 className="text-4xl font-bold mb-2">{villa.name}</h2>
+                <p className="mb-2">{villa.short_description}</p>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </Slider>
       </div>
     </div>
   );
