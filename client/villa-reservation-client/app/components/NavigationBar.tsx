@@ -5,6 +5,8 @@ import axiosPrivate from "@/app/utils/api";
 import Cookies from "js-cookie";
 import { handleLogout } from "@/app/utils/auth";
 import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 function NavigationBar() {
   const axiosInstance = axiosPrivate();
@@ -41,37 +43,55 @@ function NavigationBar() {
   };
 
   return (
-    <nav className="bg-gray-800 p-4">
+    <nav className="bg-white p-8 fixed w-full top-0 z-50">
       <div className="container mx-auto flex items-center justify-between">
         {/* Logo or Brand */}
-        <div className="text-white font-bold text-xl">Your Logo</div>
+        <Link href="/">
+          <div className="text-tertiary font-bold text-xl">LOGO</div>
+        </Link>
 
         {/* Navigation Links */}
-        <div className="space-x-4">
+        <div className="space-x-7">
           {loggedIn ? (
-            <>
-              <Link href="/villa" className="text-white">
-                {/* <a className="text-white hover:text-gray-300">Villa</a> */}
-                Villa
+            <div className="flex flex-row items-center space-x-9">
+              <Link href="/villa" className="text-black">
+                VILLA
               </Link>
-              <Link href="/booking" className="text-white">
-                Booking
+              <Link href="/booking" className="text-black">
+                BOOKING
               </Link>
-              <span className="text-white">Welcome, {name}</span>
-              <button
-                onClick={handleLogoutButton}
-                className="text-white hover:text-gray-300 cursor-pointer"
-              >
-                Logout
-              </button>
-            </>
+              <div>
+                <div className="peer text-white flex flex-row space-x-2 items-center text-primary">
+                  <FontAwesomeIcon icon={faUser} />
+                  <div>{name}</div>
+                </div>
+
+                <div
+                  className="absolute hidden peer-hover:flex hover:flex
+         flex-col bg-white drop-shadow-lg"
+                >
+                  <button
+                    onClick={handleLogoutButton}
+                    className="text-white hover:text-gray-300 cursor-pointer bg-primary py-2 px-3"
+                  >
+                    Logout
+                  </button>
+                </div>
+              </div>
+            </div>
           ) : (
             <>
-              <Link href="/login" className="text-white">
-                Sign In
+              <Link
+                href="/login"
+                className="text-primary border border-primary px-7 py-4"
+              >
+                SIGN IN
               </Link>
-              <Link href="/register" className="text-white">
-                Sign Up
+              <Link
+                href="/register"
+                className="text-white bg-primary px-7 py-4"
+              >
+                SIGN UP
               </Link>
             </>
           )}
