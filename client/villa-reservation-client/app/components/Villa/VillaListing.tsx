@@ -94,7 +94,7 @@ function VillaListing() {
                     </Link>
                     <div className="px-2">
                       <Link
-                        href="/"
+                        href={`/villa/checkout/${villa.id}`}
                         className="bg-tertiary text-white rounded-md px-3 py-2"
                       >
                         Book Now

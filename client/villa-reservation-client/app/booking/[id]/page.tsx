@@ -4,10 +4,12 @@ import React from "react";
 
 function ConfirmationPage() {
   return (
-    <>
+    <div className="min-h-screen bg-bg1 flex flex-col">
       <NavigationBar />
-      <ConfirmationComponents />
-    </>
+      <div className="flex-grow">
+        <ConfirmationComponents />
+      </div>
+    </div>
   );
 }
 

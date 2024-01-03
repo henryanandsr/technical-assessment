@@ -1,7 +1,16 @@
 "use client";
 import useAxiosPrivate from "@/app/utils/api";
 import { usePathname, useRouter } from "next/navigation";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCalendarCheck,
+  faUserFriends,
+  faDollarSign,
+  faMapMarkerAlt,
+  faInfoCircle,
+  faConciergeBell,
+} from "@fortawesome/free-solid-svg-icons";
 
 interface Transaction {
   id: String;
@@ -91,28 +100,87 @@ function ConfirmationComponents() {
   };
 
   return (
-    <>
-      <div>ConfirmationComponents</div>
-      <div>Villa Name : {transaction?.villa.name}</div>
-      <div>Address : {transaction?.villa.address}</div>
-      <div>Price per night : {transaction?.villa.price}</div>
-      <div>Description : {transaction?.villa.description}</div>
-      <div>Amenities : {transaction?.villa.amenities.join(", ")}</div>
-      {transaction?.villa.images && transaction.villa.images.length > 0 ? (
-        <img
-          src={displayImage(transaction.villa.images[0].data.data)}
-          alt={transaction.villa.name}
-          className="w-full h-48 object-cover"
-        />
+    <div className="container mx-auto px-20 pt-24">
+      <div className="text-2xl mb-5 mt-5 font-bold">Confirmation Page</div>
+      {transaction ? (
+        <div className="flex flex-row bg-bg2 rounded-md shadow-md">
+          <img
+            src={displayImage(transaction.villa.images[0].data.data)}
+            alt={transaction.villa.name}
+            className="w-full h-[50vh] object-cover"
+          />
+        </div>
       ) : (
-        <div className="w-full h-48 bg-gray-300"></div>
+        <div>Loading...</div>
       )}
-      <div>Check In : {transaction?.checkIn.toLocaleString()}</div>
-      <div>Check Out : {transaction?.checkOut.toLocaleString()}</div>
-      <div>Total Guest : {transaction?.numberOfGuests.toString()}</div>
-      <div>Total Price : {transaction?.price.toString()}</div>
-      <button onClick={handleSubmit}>Confirm</button>
-    </>
+      <div className="flex flex-row w-full justify-between">
+        <div className="p-5 flex flex-col justify-center bg-white w-1/2 mt-3 rounded-md">
+          <div className="font-bold">Villa Information</div>
+          <div className="text-sm flex items-center">
+            <FontAwesomeIcon icon={faMapMarkerAlt} className="mr-2" />
+            Address : {transaction?.villa.address}
+          </div>
+          <div className="text-sm flex items-center">
+            <FontAwesomeIcon icon={faDollarSign} className="mr-2" />
+            Price/night/person : {transaction?.villa.price}
+          </div>
+          <div className="text-sm flex items-center">
+            <FontAwesomeIcon icon={faInfoCircle} className="mr-2" />
+            Description : {transaction?.villa.description}
+          </div>
+          <div className="text-sm flex items-center">
+            <FontAwesomeIcon icon={faConciergeBell} className="mr-2" />
+            Amenities : {transaction?.villa.amenities.join(", ")}
+          </div>
+        </div>
+        <div className="p-5 bg-white rounded-md w-1/2 ml-3 mt-3 flex flex-col justify-center">
+          <div className="font-bold">Booking Information</div>
+          <div className="text-sm flex items-center">
+            <FontAwesomeIcon icon={faCalendarCheck} className="mr-2" />
+            Check In :{" "}
+            {new Date(transaction?.checkIn ?? "")
+              .toLocaleDateString("ru", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+              })
+              .split(".")
+              .join("/")}
+          </div>
+          <div className="text-sm flex items-center">
+            <FontAwesomeIcon icon={faCalendarCheck} className="mr-2" />
+            Check Out :{" "}
+            {transaction?.checkOut
+              ? new Date(transaction.checkOut)
+                  .toLocaleDateString("ru", {
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric",
+                  })
+                  .split(".")
+                  .join("/")
+              : ""}
+          </div>
+          <div className="text-sm flex items-center">
+            <FontAwesomeIcon icon={faUserFriends} className="mr-2" />
+            Total Guest : {transaction?.numberOfGuests.toString()}
+          </div>
+          <div className="text-sm flex items-center">
+            <FontAwesomeIcon icon={faDollarSign} className="mr-2" />
+            Total Price : ${transaction?.price.toString()}
+          </div>
+        </div>
+      </div>
+      <button
+        className={`bg-tertiary w-full mt-4 py-2 rounded-md text-white ${
+          transaction?.confirmed ? "opacity-50 cursor-not-allowed" : ""
+        }`}
+        onClick={handleSubmit}
+        disabled={!!transaction?.confirmed}
+      >
+        {transaction?.confirmed ? "Confirmed" : "Confirm"}
+      </button>
+    </div>
   );
 }
 
