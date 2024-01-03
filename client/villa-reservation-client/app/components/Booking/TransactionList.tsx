@@ -1,7 +1,8 @@
 "use client";
 import useAxiosPrivate from "@/app/utils/api";
 import Link from "next/link";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+
 interface Transaction {
   id: string;
   userId: string;
@@ -15,6 +16,7 @@ interface Transaction {
   updatedAt: Date;
   villa: Villa;
 }
+
 interface Villa {
   id: string;
   name: string;
@@ -36,9 +38,12 @@ function TransactionList() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await axiosInstance.get(process.env.SERVER_URL + "/api/info", {
-          withCredentials: true,
-        });
+        const res = await axiosInstance.get(
+          process.env.SERVER_URL + "/api/info",
+          {
+            withCredentials: true,
+          }
+        );
         const user = res.data.data;
         setUserId(user.id);
       } catch (error) {
@@ -57,7 +62,8 @@ function TransactionList() {
             process.env.SERVER_URL + "/api/transaction/user/" + userId,
             { withCredentials: true }
           );
-          const transactions = res.data.data;
+          let transactions = res.data.data;
+          transactions = transactions.sort((a: Transaction, b: Transaction) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
           setTransaction(transactions || []);
         }
       } catch (error) {
@@ -75,34 +81,52 @@ function TransactionList() {
     );
     return `data:image/png;base64,${base64String}`;
   };
+
   return (
-    <>
-      <div>TransactionList</div>
+    <div className="container mx-auto py-8 pt-24 px-20">
+      <h1 className="text-3xl font-bold mb-6">Transaction List</h1>
       {transaction.map((transaction) => (
-          <div key={transaction.id}>
-              <Link href={"/booking/" + transaction.id}>
+        <Link key={transaction.id} href={`/booking/${transaction.id}`}>
+          <div className="mb-6 p-4 bg-white shadow-md rounded-md cursor-pointer transition-transform transform flex flex-row">
             {transaction?.villa.images &&
             transaction.villa.images.length > 0 ? (
-              <img
-                src={displayImage(transaction.villa.images[0].data.data)}
-                alt={transaction.villa.name}
-                className="w-full h-48 object-cover"
-              />
+              <div className="w-1/2 mr-5">
+                <img
+                  src={displayImage(transaction.villa.images[0].data.data)}
+                  alt={transaction.villa.name}
+                  className="w-full h-[30vh] object-cover mb-4 rounded-md"
+                />
+              </div>
             ) : (
-              <div className="w-full h-48 bg-gray-300"></div>
-            )}{" "}
-            <div>Villa Name : {transaction.villa.name}</div>
-            <div>Number of Guest : {transaction.numberOfGuests.toString()}</div>
-            <div>Check In Date : {transaction.checkIn.toLocaleString()}</div>
-            <div>Check Out Date : {transaction.checkOut.toLocaleString()}</div>
-            <div> Total Price : {transaction.price.toString()}</div>
-            <div>Status : {transaction.confirmed.toString()}</div>
-            <div>Order At : {transaction.createdAt.toLocaleString()}</div>
-            {/* <div>{transaction.updatedAt}</div> */}
-        </Link>
+              <div className="w-full h-48 bg-gray-300 mb-4 rounded-md"></div>
+            )}
+            <div className="flex flex-col justify-center">
+              <div className="font-bold text-lg mb-2">
+                {transaction.villa.name}
+              </div>
+              <div>
+                Status:{" "}
+                <span
+                  className={
+                    transaction.confirmed ? "text-green-700 font-bold" : "text-red-500 font-bold"
+                  }
+                >
+                  {transaction.confirmed ? "Confirmed" : "Pending"}
+                </span>
+              </div>
+              <div>
+                Order At:{" "}
+                {new Date(transaction.createdAt).toLocaleDateString("en-US", {
+                  day: "2-digit",
+                  month: "long",
+                  year: "numeric",
+                })}
+              </div>{" "}
+            </div>
           </div>
+        </Link>
       ))}
-    </>
+    </div>
   );
 }
 

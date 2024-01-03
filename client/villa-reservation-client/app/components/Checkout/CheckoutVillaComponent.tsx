@@ -146,7 +146,11 @@ function CheckoutVillaComponent() {
                 <button className="bg-primary text-white px-4 py-2 rounded-md flex flex-row items-center">
                   <FontAwesomeIcon icon={faCalendarAlt} />
                   {/* if checkindate != null then div appear*/}
-                  {checkInDate && <div className="ml-2">{checkInDate.toLocaleDateString()}</div>}
+                  {checkInDate && (
+                    <div className="ml-2">
+                      {checkInDate.toLocaleDateString()}
+                    </div>
+                  )}
                 </button>
               }
             />
@@ -162,7 +166,11 @@ function CheckoutVillaComponent() {
                 <button className="bg-primary text-white px-4 py-2 rounded-md flex flex-row items-center">
                   <FontAwesomeIcon icon={faCalendarAlt} />
                   {/* if checkindate != null then div appear*/}
-                  {checkOutDate && <div className="ml-2">{checkOutDate.toLocaleDateString()}</div>}
+                  {checkOutDate && (
+                    <div className="ml-2">
+                      {checkOutDate.toLocaleDateString()}
+                    </div>
+                  )}
                 </button>
               }
             />
@@ -193,8 +201,10 @@ function CheckoutVillaComponent() {
         {/* Total */}
         <div className="flex flex-row items-center justify-between bg-white mt-5 p-5">
           <div className="text-xl">Total : $ {total}</div>
-          {/* Book Now */}
-          <button className="px-5 py-2 bg-primary rounded-md text-white" onClick={handleSubmit}>
+          <button
+            className="px-5 py-2 bg-primary rounded-md text-white"
+            onClick={handleSubmit}
+          >
             Book Now
           </button>
         </div>
