@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import OpenStreetMap from "@/app/components/map/OpenStreetMap";
 interface Villa {
   id: string;
   name: string;
@@ -51,38 +54,63 @@ function VillaDetails() {
   };
 
   return (
-    <>
+    <div className="mt-24 bg-bg1">
       <NavigationBar />
-      <h1 className="text-3xl font-bold text-center mb-4">VillaDetails</h1>
-      {/* Display Villa */}
       {villa ? (
-        <div className="grid grid-cols-1 gap-8">
-          <div className="flex flex-col md:flex-row">
-            <div className="md:w-1/2">
-              <img
-                src={displayImage(villa.images[0].data.data)}
-                alt={villa.name}
-                className="mb-8 rounded-md shadow-lg w-full"
-              />
+        <div className="container mx-auto px-20 py-10">
+          <div className="grid grid-cols-1 gap-8">
+            <div className="">
+              <div className="">
+                <div className="flex flex-row justify-between items-center mb-4">
+                  <div>
+                    <h1 className="text-3xl font-bold mb-4">{villa.name}</h1>
+                    <p className="text-xl mb-4">{villa.address}</p>
+                  </div>
+                  <div className="text-right">
+                    <div>Price/room/night</div>
+                    <div className="text-primary font-bold text-xl mb-2">
+                      $ {villa.price}
+                    </div>
+                    <Link
+                      href={`/villa/checkout/${id}`}
+                      className="bg-primary px-10 py-2 text-white mb-2"
+                    >
+                      Book Now
+                    </Link>
+                  </div>
+                </div>
+                <img
+                  src={displayImage(villa.images[0].data.data)}
+                  alt={villa.name}
+                  className="mb-8 rounded-md shadow-lg w-full"
+                />
+              </div>
+              <div className="flex flex-row">
+                <div className="flex flex-col w-1/3">
+                  <div className="text-xl mb-4 bg-white p-4 rounded-md">
+                    <h2 className="font-bold">Description</h2>
+                    <p className="text-sm">{villa.short_description}</p>
+                  </div>
+                  <div className="bg-white p-4 rounded-md">
+                    <h2 className="font-bold text-xl mb-4">Amenities</h2>
+                    <ul className="list-disc list-inside">
+                      {villa.amenities.map((amenity) => (
+                        <li className="mb-2 text-sm">{amenity}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+                <div className="w-full ml-4">
+                  <OpenStreetMap longitude={villa.longitude} latitude={villa.latitude} />
+                </div>
+              </div>
             </div>
-            <div className="md:w-1/2">
-              <h1 className="text-3xl font-bold mb-4">{villa.name}</h1>
-              <p className="text-xl mb-4">Price: {villa.price}</p>
-              <p className="text-xl mb-4">Address: {villa.address}</p>
-              <p className="text-xl mb-4">
-                Description: {villa.short_description}
-              </p>
-              <p className="text-xl mb-4">Amenities: {villa.amenities}</p>
-            </div>
-            <Link href={`/villa/checkout/${id}`}>
-                Book Now
-            </Link>
           </div>
         </div>
       ) : (
         <div>Loading...</div>
       )}
-    </>
+    </div>
   );
 }
 
