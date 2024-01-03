@@ -3,10 +3,12 @@ import CheckoutVillaComponent from "@/app/components/Checkout/CheckoutVillaCompo
 
 function CheckoutVilla() {
   return (
-    <>
+    <div className="min-h-screen bg-bg1 flex flex-col">
       <NavigationBar />
-      <CheckoutVillaComponent />
-    </>
+      <div className="flex-grow">
+        <CheckoutVillaComponent />
+      </div>
+    </div>
   );
 }
 

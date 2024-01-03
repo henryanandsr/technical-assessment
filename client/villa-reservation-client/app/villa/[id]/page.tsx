@@ -64,7 +64,7 @@ function VillaDetails() {
                 <div className="flex flex-row justify-between items-center mb-4">
                   <div>
                     <h1 className="text-3xl font-bold mb-4">{villa.name}</h1>
-                    <p className="text-xl mb-4">{villa.address}</p>
+                    <p className="text-sm mb-4">{villa.address}</p>
                   </div>
                   <div className="text-right">
                     <div>Price/room/night</div>
@@ -100,8 +100,11 @@ function VillaDetails() {
                     </ul>
                   </div>
                 </div>
-                <div className="w-full ml-4">
-                  <OpenStreetMap longitude={villa.longitude} latitude={villa.latitude} />
+                <div className="w-full ml-4 rounded-md">
+                  <OpenStreetMap
+                    longitude={villa.longitude}
+                    latitude={villa.latitude}
+                  />
                 </div>
               </div>
             </div>

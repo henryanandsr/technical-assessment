@@ -2,6 +2,10 @@
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import useAxiosPrivate from "@/app/utils/api";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 
 interface Villa {
   id: string;
@@ -92,9 +96,12 @@ function CheckoutVillaComponent() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await axiosInstance.get(process.env.SERVER_URL + "/api/info", {
-          withCredentials: true,
-        });
+        const res = await axiosInstance.get(
+          process.env.SERVER_URL + "/api/info",
+          {
+            withCredentials: true,
+          }
+        );
         setUserId(res.data.data.id);
         // console.log("USer IDDD", res.data.data.id);
       } catch (error) {
@@ -105,63 +112,94 @@ function CheckoutVillaComponent() {
   }, []);
 
   return (
-    <>
-      <div>Checkout Villa</div>
-      {/* Display Villa */}
-      {villa ? (
-        <div className="grid grid-cols-1 gap-8">
-          <div className="flex flex-col md:flex-row">
-            <div className="md:w-1/2">
-              <img
-                src={displayImage(villa.images[0].data.data)}
-                alt="Villa"
-                className="mb-8 rounded-md shadow-lg w-full"
-              />
+    <div className="mt-24 container mx-auto px-20">
+      <div className="">
+        <div className="font-bold text-4xl text-center mb-5 pt-5">Checkout</div>
+        {/* Display Villa */}
+        {villa ? (
+          <div className="flex flex-row bg-bg2 rounded-md shadow-md">
+            <img
+              src={displayImage(villa.images[0].data.data)}
+              alt="Villa"
+              className="rounded-md w-1/2 h-[35vh] mr-5 object-cover"
+            />
+            <div className="flex flex-col justify-center">
+              <h2 className="font-bold mb-2">{villa.name}</h2>
+              <p className="mb-2">{villa.address}</p>
+              <p className="mb-2">{villa.short_description}</p>
+              <p className="mb-2">{villa.description}</p>
+              <p className="mb-2">{villa.price}</p>
             </div>
-            <div className="md:w-1/2">
-              <h2 className="text-2xl font-bold mb-2">{villa.name}</h2>
-              <p className="text-xl mb-2">{villa.short_description}</p>
-              <p className="text-xl mb-2">{villa.description}</p>
-              <p className="text-xl mb-2">{villa.price}</p>
-              <p className="text-xl mb-2">{villa.longitude}</p>
-              <p className="text-xl mb-2">{villa.latitude}</p>
-              <p className="text-xl mb-2">{villa.address}</p>
-              <p className="text-xl mb-2">{villa.amenities}</p>
+          </div>
+        ) : (
+          <div>Loading...</div>
+        )}
+        {/* Check In */}
+        <div className="flex flex-row w-full bg-white rounded-md p-4 mt-5 shadow-lg justify-between">
+          <div className="flex flex-col items-center">
+            <div className="mb-2">Check In</div>
+            <DatePicker
+              selected={checkInDate}
+              onChange={(date: Date) => setCheckInDate(date)}
+              dateFormat="dd-MM-yyyy"
+              customInput={
+                <button className="bg-primary text-white px-4 py-2 rounded-md flex flex-row items-center">
+                  <FontAwesomeIcon icon={faCalendarAlt} />
+                  {/* if checkindate != null then div appear*/}
+                  {checkInDate && <div className="ml-2">{checkInDate.toLocaleDateString()}</div>}
+                </button>
+              }
+            />
+          </div>
+          {/* Check Out */}
+          <div className="flex flex-col items-center">
+            <div className="mb-2">Check Out</div>
+            <DatePicker
+              selected={checkOutDate}
+              onChange={(date: Date) => setCheckOutDate(date)}
+              dateFormat="dd-MM-yyyy"
+              customInput={
+                <button className="bg-primary text-white px-4 py-2 rounded-md flex flex-row items-center">
+                  <FontAwesomeIcon icon={faCalendarAlt} />
+                  {/* if checkindate != null then div appear*/}
+                  {checkOutDate && <div className="ml-2">{checkOutDate.toLocaleDateString()}</div>}
+                </button>
+              }
+            />
+          </div>
+          <div className="flex flex-col items-center">
+            <div className="mb-2">Guest</div>
+            <div className="flex items-center space-x-2">
+              <button
+                onClick={() => setGuests(guests - 1)}
+                disabled={guests <= 1}
+                className="bg-primary hover:bg-orange-700 text-white font-bold py-2 px-4 rounded"
+              >
+                -
+              </button>
+              <span className="text-xl">{guests}</span>
+              <button
+                onClick={() => setGuests(guests + 1)}
+                className="bg-primary hover:bg-orange-700 text-white font-bold py-2 px-4 rounded"
+              >
+                +
+              </button>
             </div>
           </div>
         </div>
-      ) : (
-        <div>Loading...</div>
-      )}
-      {/* Check In */}
-      <div>Check In</div>
-      <input
-        type="date"
-        value={checkInDate?.toISOString().split("T")[0] || ""}
-        onChange={(e) => setCheckInDate(new Date(e.target.value))}
-      />
-      {/* Check Out */}
-      <div>Check Out</div>
-      <input
-        type="date"
-        value={checkOutDate?.toISOString().split("T")[0] || ""}
-        onChange={(e) => setCheckOutDate(new Date(e.target.value))}
-      />
 
-      {/* Guest */}
-      <div>Guest</div>
-      <div>
-        <button onClick={() => setGuests(guests - 1)} disabled={guests <= 1}>
-          -
-        </button>
-        <span>{guests}</span>
-        <button onClick={() => setGuests(guests + 1)}>+</button>
+        {/* Guest */}
+
+        {/* Total */}
+        <div className="flex flex-row items-center justify-between bg-white mt-5 p-5">
+          <div className="text-xl">Total : $ {total}</div>
+          {/* Book Now */}
+          <button className="px-5 py-2 bg-primary rounded-md text-white" onClick={handleSubmit}>
+            Book Now
+          </button>
+        </div>
       </div>
-      {/* Total */}
-      <div>Total : {total}</div>
-      {/* Book Now */}
-      <button onClick={handleSubmit}>Book Now</button>
-    </>
+    </div>
   );
 }
 
