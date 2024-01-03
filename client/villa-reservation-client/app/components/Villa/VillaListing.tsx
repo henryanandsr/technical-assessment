@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
+import villaListing from "../../assets/villa-listing.jpg";
 interface Villa {
   id: string;
   name: string;
@@ -44,56 +45,67 @@ function VillaListing() {
   );
 
   return (
-    <div className="container mx-auto mt-24 z-1">
-      <h1 className="text-3xl font-bold mb-4">Villa Listings</h1>
-      {/* Search Bar */}
-      <div className="mb-4">
-        <input
-          type="text"
-          placeholder="Search by name..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="border border-gray-300 px-4 py-2 rounded-md"
-        />
+    <div className="mt-24">
+      <div className="relative">
+        <img src={villaListing.src} alt="" />
+        <div className="absolute inset-0 bg-black opacity-50"></div>
+        <div className="absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-4 text-white text-6xl font-bold">
+          Lorem Ipsum Dolor sir Amet
+        </div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-4">
+          <input
+            type="text"
+            placeholder="Search by name..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="border border-gray-300 px-4 py-2 w-96 "
+          />
+        </div>
       </div>
-
-      <div className="grid grid-cols-1 gap-8">
-        {loading ? (
-          <div>Loading...</div>
-        ) : (
-          <>
-            {filteredVillas.map((villa) => (
-              <div
-                key={villa.id}
-                className="bg-white rounded-md overflow-hidden shadow-lg"
-              >
-                <Link href={"villa/" + villa.id}>
-                  {villa.images && villa.images.length > 0 && (
-                    <img
-                      src={displayImage(villa.images[0].data.data)}
-                      alt={villa.name}
-                      className="w-full h-48 object-cover"
-                    />
-                  )}
-                </Link>
-                <div className="p-4">
+      <div className="container mx-auto z-1 px-20 mt-5">
+        <div className="grid grid-cols-1 gap-8">
+          {loading ? (
+            <div>Loading...</div>
+          ) : (
+            <>
+              {filteredVillas.map((villa) => (
+                <div
+                  key={villa.id}
+                  className="bg-white rounded-md overflow-hidden flex flex-row shadow-md h-[20vh]"
+                >
                   <Link href={"villa/" + villa.id}>
-                    <h2 className="text-xl font-bold mb-2">{villa.name}</h2>
-                    <p className="text-gray-700 mb-2">
-                      {villa.short_description}
-                    </p>
-                    <p className="text-blue-500 font-bold">
-                      ${villa.price}/night
-                    </p>
+                    {villa.images && villa.images.length > 0 && (
+                      <img
+                        src={displayImage(villa.images[0].data.data)}
+                        alt={villa.name}
+                        className="h-full w-96 object-cover"
+                      />
+                    )}
                   </Link>
-                  <button className="bg-blue-500 text-white px-4 py-2 rounded-md mt-4">
-                    Book Now
-                  </button>
+                  <div className="p-4 flex flex-row justify-between w-full items-center">
+                    <Link href={"villa/" + villa.id}>
+                      <h2 className="text-xl font-bold mb-2">{villa.name}</h2>
+                      <p className="text-gray-700 mb-2">
+                        {villa.short_description}
+                      </p>
+                      <p className="text-tertiary font-bold">
+                        ${villa.price}/night
+                      </p>
+                    </Link>
+                    <div className="px-2">
+                      <Link
+                        href="/"
+                        className="bg-tertiary text-white rounded-md px-3 py-2"
+                      >
+                        Book Now
+                      </Link>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </>
-        )}
+              ))}
+            </>
+          )}
+        </div>
       </div>
     </div>
   );

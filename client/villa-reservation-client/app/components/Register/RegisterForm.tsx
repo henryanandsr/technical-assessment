@@ -32,8 +32,8 @@ const RegisterForm = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-8 p-4 bg-white shadow-md rounded-md">
-      <h2 className="text-2xl font-bold mb-4">Register</h2>
+    <div className="max-w-md mx-auto mt-24 p-4 bg-white shadow-md rounded-md">
+      <h2 className="text-2xl font-bold mb-4 text-primary">Register</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label
@@ -88,7 +88,7 @@ const RegisterForm = () => {
         </div>
         <button
           type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+          className="bg-primary text-white px-4 py-2 rounded-md hover:bg-orange-600"
         >
           Register
         </button>

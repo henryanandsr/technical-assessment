@@ -61,7 +61,7 @@ function NavigationBar() {
                 BOOKING
               </Link>
               <div>
-                <div className="peer text-white flex flex-row space-x-2 items-center text-primary">
+                <div className="peer flex flex-row space-x-2 items-center text-primary">
                   <FontAwesomeIcon icon={faUser} />
                   <div>{name}</div>
                 </div>

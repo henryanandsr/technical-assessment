@@ -10,11 +10,17 @@ function Footer() {
         <div>
           <h2 className="text-xl font-bold mb-4">Contact Us</h2>
           <div className="flex items-center mb-2">
-            <FontAwesomeIcon icon={faPhone} className="text-tertiary mr-2 h-5" />
+            <FontAwesomeIcon
+              icon={faPhone}
+              className="text-tertiary mr-2 h-5"
+            />
             +1 (123) 456-7890
           </div>
           <div className="flex items-center">
-            <FontAwesomeIcon icon={faEnvelope} className="text-tertiary mr-2 h-5" />
+            <FontAwesomeIcon
+              icon={faEnvelope}
+              className="text-tertiary mr-2 h-5"
+            />
             info@example.com
           </div>
         </div>
