@@ -23,8 +23,8 @@ app.use(cookieParser());
 app.use("/api", userRoutes);
 app.use("/api", villaRoutes);
 app.use("/api", authRoutes);
-app.use(verifyJWT);
-app.use("/api", transactionRoutes);
+app.use("/api/transaction", verifyJWT);
+app.use("/api/transaction", transactionRoutes);
 
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
