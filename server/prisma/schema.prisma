@@ -19,6 +19,19 @@ model User {
   transactions Transaction[]
 }
 
+enum Amenity {
+  Wifi
+  Kitchen
+  TV
+  Pool
+  AirConditioning
+  Heating
+  Parking
+  Washer
+  Dryer
+  Breakfast
+}
+
 model Villa {
   id                String        @id @default(auto()) @map("_id") @db.ObjectId
   name              String
@@ -28,7 +41,9 @@ model Villa {
   longitude         Float
   latitude          Float
   address           String
-  amenities         String[]
+  city              String
+  country           String
+  amenities         Amenity[]
   transactions      Transaction[]
   images            Image[]
 }
