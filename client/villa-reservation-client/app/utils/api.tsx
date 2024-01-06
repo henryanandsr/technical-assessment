@@ -3,9 +3,7 @@ import axios from "axios";
 import useRefreshToken from "./refresh";
 
 const useAxiosPrivate = () => {
-  console.log("axios private");
   const refresh = useRefreshToken();
-  console.log("satu");
   const axiosInstance = axios.create({
     baseURL: process.env.SERVER_URL,
     withCredentials: true,
@@ -16,15 +14,21 @@ const useAxiosPrivate = () => {
         return response;
       },
       async (error) => {
+        console.log("refresh");
         const originalRequest = error.config;
-        console.log("error");
-        console.log("error response status", error.response.status);
-        console.log("original request", originalRequest);
-        if (error.response.status === 403) {
-          originalRequest._retry = true;
-          const access_token = await refresh();
-          console.log("access_token", access_token);
-          return axios(originalRequest);
+
+        const isTokenExpired =
+          error.response.status === 403 && !originalRequest._retry;
+
+        if (isTokenExpired) {
+          try {
+            await refresh();
+            console.log("refreshed");
+            return axios(originalRequest);
+          } catch (refreshError) {
+            console.error("Token refresh failed:", refreshError);
+            return Promise.reject(refreshError);
+          }
         }
         return Promise.reject(error);
       }
@@ -32,7 +36,7 @@ const useAxiosPrivate = () => {
     return () => {
       axiosInstance.interceptors.response.eject(interceptor);
     };
-  }, [refresh]);
+  }, [axiosInstance, refresh]);
   return axiosInstance;
 };
 
