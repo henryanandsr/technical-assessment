@@ -10,11 +10,11 @@ import {
 
 const router = express.Router();
 
-router.post("/transaction", createTransaction);
-router.get("/transaction", getTransaction);
-router.get("/transaction/:id", getTransactionById);
-router.get("/transaction/user/:userId", getTransactionByUserId);
-router.put("/transaction/:id", updateTransaction);
-router.put("/transaction/confirm/:id", confirmTransaction);
+router.post("/", createTransaction);
+router.get("/", getTransaction);
+router.get("/:id", getTransactionById);
+router.get("/user/:userId", getTransactionByUserId);
+router.put("/:id", updateTransaction);
+router.put("/confirm/:id", confirmTransaction);
 
 module.exports = router;
