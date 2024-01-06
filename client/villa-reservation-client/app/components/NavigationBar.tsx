@@ -54,7 +54,7 @@ function NavigationBar() {
         <div className="space-x-7">
           {loggedIn ? (
             <div className="flex flex-row items-center space-x-9">
-              <Link href="/villa" className="text-black">
+              <Link href="/villa?page=1&itemsPerPage=10" className="text-black">
                 VILLA
               </Link>
               <Link href="/booking" className="text-black">
