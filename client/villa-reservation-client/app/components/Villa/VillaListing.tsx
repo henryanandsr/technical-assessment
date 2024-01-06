@@ -5,7 +5,6 @@ import Link from "next/link";
 import villaListing from "../../assets/villa-listing.jpg";
 import MultiSelectDropdown from "./MultiSelectDropdown";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { Pagination } from "flowbite-react";
 
 interface Villa {
   id: string;
@@ -272,6 +271,27 @@ function VillaListing() {
         </div>
       </div>
       <div className="container mx-auto z-1 px-20 mt-5">
+        <div className="mb-2 flex flex-row justify-end items-center">
+          <label htmlFor="itemsPerPage" className="mr-2">
+            Items per page:
+          </label>
+          <select
+            id="itemsPerPage"
+            value={searchParams.get("itemsPerPage") || "10"}
+            onChange={(e) =>
+              router.push(
+                pathName +
+                  "?" +
+                  createQueryString("itemsPerPage", e.target.value)
+              )
+            }
+            className="border border-gray-300 px-2 py-1"
+          >
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+          </select>
+        </div>
         <div className="grid grid-cols-1 gap-8">
           {loading ? (
             <div>Loading...</div>
@@ -315,7 +335,7 @@ function VillaListing() {
             </>
           )}
         </div>
-        <div className="flex justify-center mt-4">
+        <div className="flex justify-center mt-4 mb-4">
           <button
             onClick={() => {
               const currentPage = parseInt(searchParams.get("page") || "1");
@@ -325,7 +345,7 @@ function VillaListing() {
                   createQueryString("page", (currentPage - 1).toString())
               );
             }}
-            disabled={(searchParams.get("page") || 1) === 1}
+            disabled={Number(searchParams.get("page") || 1) === 1}
           >
             Previous Page
           </button>
@@ -339,6 +359,7 @@ function VillaListing() {
                   createQueryString("page", (currentPage + 1).toString())
               );
             }}
+
           >
             Next Page
           </button>
