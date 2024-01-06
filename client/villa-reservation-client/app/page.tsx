@@ -24,7 +24,7 @@ const Home = () => {
         </div>
       </div>
       <AboutUsComponents />
-      <ListOfVilla />
+      {/* <ListOfVilla /> */}
       <Footer />
     </>
   );

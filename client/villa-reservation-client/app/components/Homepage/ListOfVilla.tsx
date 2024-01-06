@@ -21,6 +21,7 @@ function ListOfVilla() {
       try {
         const result = await axios(process.env.SERVER_URL + "/api/villa");
         setVillaData(result.data.data);
+        console.log("Villa data:", result.data.data);
       } catch (error) {
         console.error("Error fetching villa data:", error);
       }
@@ -31,9 +32,11 @@ function ListOfVilla() {
 
   const displayImage = (imageData: number[]) => {
     const uint8Array = new Uint8Array(imageData);
-    const base64String = btoa(
-      String.fromCharCode.apply(null, Array.from(uint8Array))
-    );
+    let binary = "";
+    uint8Array.forEach((byte) => {
+      binary += String.fromCharCode(byte);
+    });
+    const base64String = btoa(binary);
     return `data:image/png;base64,${base64String}`;
   };
 
