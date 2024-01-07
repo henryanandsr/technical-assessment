@@ -7,6 +7,8 @@ import AboutUsComponents from "./components/Homepage/AboutUsComponents";
 import Footer from "./components/Homepage/Footer";
 import MultiSelectDropdown from "./components/Villa/MultiSelectDropdown";
 import useAxiosPrivate from "./utils/api";
+import { ThemeProvider } from "@material-tailwind/react";
+
 interface Villa {
   id: string;
   name: string;
@@ -96,7 +98,7 @@ const Home = () => {
     Router.push(`/villa?${params.toString()}` + "&page=1" + "&itemsPerPage=10");
   };
   return (
-    <>
+    <ThemeProvider>
       <NavigationBar />
       <div className="relative">
         <img
@@ -209,7 +211,7 @@ const Home = () => {
       <AboutUsComponents />
       {/* <ListOfVilla /> */}
       <Footer />
-    </>
+    </ThemeProvider>
   );
 };
 
