@@ -6,7 +6,7 @@ import Cookies from "js-cookie";
 import { handleLogout } from "@/app/utils/auth";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 
 function NavigationBar() {
   const axiosInstance = axiosPrivate();
@@ -70,10 +70,20 @@ function NavigationBar() {
                   className="absolute hidden peer-hover:flex hover:flex
          flex-col bg-white drop-shadow-lg"
                 >
+                  <Link
+                    href={"/profile"}
+                    className="text-white hover:text-gray-300 cursor-pointer bg-primary py-2 px-3"
+                  >
+                    {/* add icon */}
+                    <FontAwesomeIcon icon={faUser} className="mr-2" />
+                    Profile
+                  </Link>
                   <button
                     onClick={handleLogoutButton}
                     className="text-white hover:text-gray-300 cursor-pointer bg-primary py-2 px-3"
                   >
+                    {/* add icon */}
+                    <FontAwesomeIcon icon={faSignOutAlt} className="mr-2" />
                     Logout
                   </button>
                 </div>
