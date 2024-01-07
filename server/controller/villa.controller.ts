@@ -121,18 +121,16 @@ export const getVillaBySearchFilterAndPage = async (
       whereClause.push({ country: { contains: country as string } });
     }
     if (priceLow) {
-      whereClause.push({ price: { lte: parsedPriceLow } });
+      whereClause.push({ price: { gte: parsedPriceLow } });
     }
     if (priceHigh) {
-      whereClause.push({ price: { gte: parsedPriceHigh } });
+      whereClause.push({ price: { lte: parsedPriceHigh } });
     }
     if (amenities) {
-      console.log(amenities);
       const parsedAmenities: Amenity[] = (amenities as string)
         .split(",")
         .map((amenity) => amenity.trim()) as Amenity[];
-      console.log(parsedAmenities);
-      whereClause.push({ amenities: { hasSome: parsedAmenities } });
+      whereClause.push({ amenities: { hasEvery: parsedAmenities } });
     }
     const villa = await prisma.villa.findMany({
       where: {
