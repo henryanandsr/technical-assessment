@@ -25,7 +25,7 @@ function VillaListing() {
   const [searchQuery, setSearchQuery] = useState<string | null>(null);
   const [countries, setCountries] = useState<Set<string>>(new Set());
   const [city, setCity] = useState<string | null>(null);
-  const [cities, setCities] = useState<string[]>([]);
+  const [cities, setCities] = useState<Set<string>>(new Set());
   const [country, setCountry] = useState<string | null>(null);
   const [priceLow, setPriceLow] = useState<number | null>(null);
   const [priceHigh, setPriceHigh] = useState<number | null>(null);
@@ -114,6 +114,23 @@ function VillaListing() {
         console.error("Error fetching countries:", error);
       }
     };
+    const countryParams = searchParams.get("country");
+    const fetchCities = async () => {
+      try {
+        const res = await axiosInstance.get(uri_cities + "/" + countryParams, {
+          withCredentials: true,
+        });
+        console.log("uri_cities", uri_cities + "/" + country)
+        console.log("set cities", res.data.data)
+        setCities(new Set(res.data.data.sort()));
+      } catch (error) {
+        console.error("Error fetching villas:", error);
+      }
+    }
+    console.log("use effect 2", countryParams)  
+    if (countryParams) {
+      fetchCities();
+    }
     fetchCountries();
     fetchVillas();
   }, [useSearchParams, searchParams]);
@@ -123,7 +140,7 @@ function VillaListing() {
         const res = await axiosInstance.get(uri_cities + "/" + country, {
           withCredentials: true,
         });
-        setCities(res.data.data);
+        setCities(new Set(res.data.data.sort()));
       } catch (error) {
         console.error("Error fetching villas:", error);
       }
@@ -238,7 +255,7 @@ function VillaListing() {
                 className="border border-gray-300 px-4 py-2"
               >
                 <option value="">Select a city</option>
-                {cities.map((city: string, index) => (
+                {Array.from(cities).map((city: string, index) => (
                   <option key={`city-${index}`} value={city}>
                     {city}
                   </option>
