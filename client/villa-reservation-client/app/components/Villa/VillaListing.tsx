@@ -5,6 +5,7 @@ import Link from "next/link";
 import villaListing from "../../assets/villa-listing.jpg";
 import MultiSelectDropdown from "./MultiSelectDropdown";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import path from "path";
 
 interface Villa {
   id: string;
@@ -47,6 +48,24 @@ function VillaListing() {
   const uri_countries = process.env.SERVER_URL + "/api/countries";
   const uri_cities = process.env.SERVER_URL + "/api/countries";
   useEffect(() => {
+    if (searchParams.get("search")) {
+      setSearchQuery(searchParams.get("search"));
+    }
+    if (searchParams.get("country")) {
+      setCountry(searchParams.get("country"));
+    }
+    if (searchParams.get("city")) {
+      setCity(searchParams.get("city"));
+    }
+    if (searchParams.get("priceLow")) {
+      setPriceLow(parseInt(searchParams.get("priceLow") || "0"));
+    }
+    if (searchParams.get("priceHigh")) {
+      setPriceHigh(parseInt(searchParams.get("priceHigh") || "0"));
+    }
+    if (searchParams.get("amenities")) {
+      setAmenities(searchParams.get("amenities")?.split(",") || []);
+    }
     const addInitialParams = () => {
       try {
         let initial_param = new URLSearchParams();
@@ -131,45 +150,39 @@ function VillaListing() {
   const handleSubmit = () => {
     // reset params to empty
     let params = new URLSearchParams();
+    console.log("searchQuery", params);
     if (searchQuery) {
       params.set("search", searchQuery);
     }
     if (country) {
-      router.push(pathName + "?" + createQueryString("country", country));
+      // router.push(pathName + "?" + createQueryString("country", country));
       params.set("country", country);
     }
     if (city) {
-      router.push(pathName + "?" + createQueryString("city", city));
+      // router.push(pathName + "?" + createQueryString("city", city));
+      console.log("city", city);
       params.set("city", city);
     }
     if (priceLow) {
-      router.push(
-        pathName + "?" + createQueryString("priceLow", priceLow.toString())
-      );
+      // router.push(
+      //   pathName + "?" + createQueryString("priceLow", priceLow.toString())
+      // );
       params.set("priceLow", priceLow.toString());
     }
     if (priceHigh) {
-      router.push(
-        pathName + "?" + createQueryString("priceHigh", priceHigh.toString())
-      );
+      // router.push(
+      //   pathName + "?" + createQueryString("priceHigh", priceHigh.toString())
+      // );
       params.set("priceHigh", priceHigh.toString());
-    }
-    if (amenities.length > 0) {
-      console.log("select amenities", amenities);
-      for (let i = 0; i < amenities.length; i++) {
-        params.set("amenities", amenities.toString());
-      }
-      const quotedAmenities = amenities.map((amenity) => `"${amenity}"`);
-      router.push(
-        pathName +
-          "?" +
-          createQueryString("amenities=[", quotedAmenities.join(",") + "]")
-      );
     }
     params.set("page", searchParams.get("page") || "1");
     params.set("itemsPerPage", searchParams.get("itemsPerPage") || "10");
-
-    router.push(pathName + "?" + params.toString());
+    router.push("?" + params.toString());
+    if (amenities.length > 0) {
+      const amenitiesString = amenities.join(",");
+      params.set("amenities", amenitiesString);
+      router.push(pathName + "?" + params.toString());
+    }
   };
 
   return (
@@ -199,7 +212,10 @@ function VillaListing() {
                 name="country"
                 id="country"
                 value={country || ""}
-                onChange={(e) => setCountry(e.target.value)}
+                onChange={(e) => {
+                  setCountry(e.target.value);
+                  setCity(null);
+                }}
                 className="border border-gray-300 px-4 py-2"
               >
                 <option value="">Select a country</option>
@@ -359,7 +375,6 @@ function VillaListing() {
                   createQueryString("page", (currentPage + 1).toString())
               );
             }}
-
           >
             Next Page
           </button>
