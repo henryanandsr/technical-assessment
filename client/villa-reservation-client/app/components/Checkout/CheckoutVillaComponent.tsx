@@ -161,11 +161,11 @@ function CheckoutVillaComponent() {
             <DatePicker
               selected={checkOutDate}
               onChange={(date: Date) => setCheckOutDate(date)}
+              minDate={checkInDate}
               dateFormat="dd-MM-yyyy"
               customInput={
                 <button className="bg-primary text-white px-4 py-2 rounded-md flex flex-row items-center">
                   <FontAwesomeIcon icon={faCalendarAlt} />
-                  {/* if checkindate != null then div appear*/}
                   {checkOutDate && (
                     <div className="ml-2">
                       {checkOutDate.toLocaleDateString()}
