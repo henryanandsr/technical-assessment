@@ -7,6 +7,7 @@ import Link from "next/link";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import OpenStreetMap from "@/app/components/map/OpenStreetMap";
+import { Button, Typography } from "@material-tailwind/react";
 interface Villa {
   id: string;
   name: string;
@@ -57,25 +58,33 @@ function VillaDetails() {
     <div className="bg-bg1">
       <NavigationBar />
       {villa ? (
-        <div className="container mx-auto px-20 py-10">
+        <div className="container mx-auto px-5 md:px-20 py-10">
           <div className="grid grid-cols-1 gap-8">
             <div className="">
               <div className="">
                 <div className="flex flex-row justify-between items-center mb-4">
-                  <div>
-                    <h1 className="text-3xl font-bold mb-4">{villa.name}</h1>
-                    <p className="text-sm mb-4">{villa.address}</p>
+                  <div className="">
+                    <Typography
+                      placeholder=""
+                      className="text-xl md:text-3xl font-bold mb-4"
+                    >
+                      {villa.name}
+                    </Typography>
+                    <Typography placeholder="" className="text-sm mb-4">
+                      {villa.address}
+                    </Typography>
                   </div>
                   <div className="text-right">
-                    <div>Price/room/night</div>
-                    <div className="text-primary font-bold text-xl mb-2">
-                      $ {villa.price}
-                    </div>
-                    <Link
-                      href={`/villa/checkout/${id}`}
-                      className="bg-primary px-10 py-2 text-white mb-2"
+                    <Typography placeholder={""}>Price/room/night</Typography>
+                    <Typography
+                      placeholder=""
+                      className="text-primary font-bold md:text-xl mb-2"
                     >
-                      Book Now
+                      $ {villa.price}
+                    </Typography>
+
+                    <Link href={`/villa/checkout/${id}`}>
+                      <Button placeholder={""}>Book Now</Button>
                     </Link>
                   </div>
                 </div>
@@ -85,8 +94,8 @@ function VillaDetails() {
                   className="mb-8 rounded-md shadow-lg w-full"
                 />
               </div>
-              <div className="flex flex-row">
-                <div className="flex flex-col w-1/3">
+              <div className="flex flex-col md:flex-row">
+                <div className="flex flex-col md:w-1/3">
                   <div className="text-xl mb-4 bg-white p-4 rounded-md">
                     <h2 className="font-bold">Description</h2>
                     <p className="text-sm">{villa.short_description}</p>
@@ -100,7 +109,7 @@ function VillaDetails() {
                     </ul>
                   </div>
                 </div>
-                <div className="w-full ml-4 rounded-md">
+                <div className="w-full mt-2 h-64 md:w-full md:h-auto md:ml-4 rounded-md">
                   <OpenStreetMap
                     longitude={villa.longitude}
                     latitude={villa.latitude}
