@@ -62,7 +62,7 @@ function VillaDetails() {
           <div className="grid grid-cols-1 gap-8">
             <div className="">
               <div className="">
-                <div className="flex flex-row justify-between items-center mb-4">
+                <div className="flex flex-row justify-between mb-4">
                   <div className="">
                     <Typography
                       placeholder=""
@@ -84,7 +84,7 @@ function VillaDetails() {
                     </Typography>
 
                     <Link href={`/villa/checkout/${id}`}>
-                      <Button placeholder={""}>Book Now</Button>
+                      <Button placeholder={""} className="bg-tertiary">Book Now</Button>
                     </Link>
                   </div>
                 </div>

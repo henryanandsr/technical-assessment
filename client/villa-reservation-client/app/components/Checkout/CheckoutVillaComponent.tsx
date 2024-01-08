@@ -6,6 +6,15 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
+import {
+  Card,
+  CardBody,
+  CardHeader,
+  Typography,
+  Button
+} from "@material-tailwind/react";
+import { FaMinus, FaPlus } from 'react-icons/fa';
+
 
 interface Villa {
   id: string;
@@ -38,8 +47,6 @@ function CheckoutVillaComponent() {
       try {
         const res = await axiosInstance.get(uri, { withCredentials: true });
         setVilla(res.data.data);
-        // console.log("res", res.data.data);
-        // console.log("images", res.data.data.images);
       } catch (error) {
         console.error("Error fetching villas:", error);
       }
@@ -112,36 +119,56 @@ function CheckoutVillaComponent() {
   }, []);
 
   return (
-    <div className="container mx-auto px-20">
+    <div className="container mx-auto px-5 md:px-20">
       <div className="">
-        <div className="font-bold text-4xl text-center mb-5 pt-5">Checkout</div>
+        <Typography
+          placeholder="Header"
+          className="font-bold text-4xl text-center mb-10 pt-5"
+        >
+          Checkout
+        </Typography>
         {/* Display Villa */}
         {villa ? (
-          <div className="flex flex-row bg-bg2 rounded-md shadow-md">
-            <img
-              src={displayImage(villa.images[0].data.data)}
-              alt="Villa"
-              className="rounded-md w-1/2 h-[35vh] mr-5 object-cover"
-            />
-            <div className="flex flex-col justify-center">
+          <Card
+            className="flex flex-col md:flex-row bg-bg2 rounded-md shadow-md"
+            placeholder={""}
+          >
+            <CardHeader placeholder={""} className="">
+              <img
+                src={displayImage(villa.images[0].data.data)}
+                alt="Villa"
+                className="rounded-md w-full h-[35vh] mr-5 object-cover"
+              />
+            </CardHeader>
+            <CardBody
+              className="flex flex-col justify-center items-center md:items-start"
+              placeholder={""}
+            >
               <h2 className="font-bold mb-2">{villa.name}</h2>
               <p className="mb-2">{villa.address}</p>
-              <p className="mb-2">{villa.short_description}</p>
               <p className="mb-2">{villa.description}</p>
-              <p className="mb-2">{villa.price}</p>
-            </div>
-          </div>
+              <p className="mb-2">$ {villa.price}</p>
+            </CardBody>
+            {/* <div className="flex flex-col justify-center items-center md:items-start">
+              <h2 className="font-bold mb-2">{villa.name}</h2>
+              <p className="mb-2">{villa.address}</p>
+              <p className="mb-2">{villa.description}</p>
+              <p className="mb-2">$ {villa.price}</p>
+            </div> */}
+          </Card>
         ) : (
           <div>Loading...</div>
         )}
         {/* Check In */}
-        <div className="flex flex-row w-full bg-white rounded-md p-4 mt-5 shadow-lg justify-between">
+        <div className="flex flex-col md:flex-row w-full bg-white rounded-md p-4 mt-5 shadow-lg justify-between">
           <div className="flex flex-col items-center">
             <div className="mb-2">Check In</div>
             <DatePicker
               selected={checkInDate}
               onChange={(date: Date) => setCheckInDate(date)}
               dateFormat="dd-MM-yyyy"
+              minDate={new Date()}
+              maxDate={checkOutDate}
               customInput={
                 <button className="bg-primary text-white px-4 py-2 rounded-md flex flex-row items-center">
                   <FontAwesomeIcon icon={faCalendarAlt} />
@@ -178,20 +205,22 @@ function CheckoutVillaComponent() {
           <div className="flex flex-col items-center">
             <div className="mb-2">Guest</div>
             <div className="flex items-center space-x-2">
-              <button
+              <Button
                 onClick={() => setGuests(guests - 1)}
                 disabled={guests <= 1}
-                className="bg-primary hover:bg-orange-700 text-white font-bold py-2 px-4 rounded"
+                className="bg-primary hover:bg-orange-700 text-white font-bold  rounded"
+                placeholder={"minus button"}
               >
-                -
-              </button>
+                <FaMinus />
+              </Button>
               <span className="text-xl">{guests}</span>
-              <button
+              <Button
                 onClick={() => setGuests(guests + 1)}
-                className="bg-primary hover:bg-orange-700 text-white font-bold py-2 px-4 rounded"
+                className="bg-primary hover:bg-orange-700 text-white font-bold rounded"
+                placeholder={"plus button"}
               >
-                +
-              </button>
+                <FaPlus />
+              </Button>
             </div>
           </div>
         </div>
@@ -201,12 +230,13 @@ function CheckoutVillaComponent() {
         {/* Total */}
         <div className="flex flex-row items-center justify-between bg-white mt-5 p-5">
           <div className="text-xl">Total : $ {total}</div>
-          <button
+          <Button
             className="px-5 py-2 bg-primary rounded-md text-white"
             onClick={handleSubmit}
+            placeholder={"book button"}
           >
             Book Now
-          </button>
+          </Button>
         </div>
       </div>
     </div>
