@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Button, Card, Input } from "@material-tailwind/react";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
@@ -33,7 +34,10 @@ function LoginForm() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-24 p-4 bg-white shadow-md rounded-md">
+    <Card
+      className="max-w-md mx-auto mt-24 p-4 bg-white shadow-md rounded-md"
+      placeholder={"Card"}
+    >
       <h2 className="text-2xl font-bold mb-4 text-primary">Login</h2>
       <form onSubmit={handleSubmit}>
         {showSuccessNotification && (
@@ -47,32 +51,22 @@ function LoginForm() {
           </div>
         )}
         <div className="mb-4">
-          <label
-            htmlFor="email"
-            className="block text-sm font-medium text-gray-600"
-          >
-            Email
-          </label>
-          <input
+          <Input
             type="email"
+            label="Email"
             id="email"
             name="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="mt-1 p-2 w-full border rounded-md"
             placeholder="Input your email here"
             required
+            crossOrigin={undefined}
           />
         </div>
         <div className="mb-4">
-          <label
-            htmlFor="password"
-            className="block text-sm font-medium text-gray-600"
-          >
-            Password
-          </label>
           <div className="relative">
-            <input
+            <Input
+              label="Password"
               type={showPassword ? "text" : "password"}
               id="password"
               name="password"
@@ -81,6 +75,7 @@ function LoginForm() {
               className="mt-1 p-2 w-full border rounded-md pr-10"
               placeholder="Input your password here"
               required
+              crossOrigin={undefined}
             />
             <button
               type="button"
@@ -95,14 +90,15 @@ function LoginForm() {
             </button>
           </div>
         </div>
-        <button
+        <Button
           type="submit"
-          className="bg-primary text-white px-4 py-2 rounded-md hover:bg-orange-600"
+          className="bg-primary text-white px-4 py-2 rounded-md hover:bg-orange-600 w-full"
+          placeholder={"Submit"}
         >
           Login
-        </button>
+        </Button>
       </form>
-    </div>
+    </Card>
   );
 }
 

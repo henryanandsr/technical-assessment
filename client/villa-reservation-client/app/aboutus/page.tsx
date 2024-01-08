@@ -7,7 +7,7 @@ function AboutUsPage() {
     <div>
       <NavigationBar />
 
-      <div className="min-h-screen bg-gray-100 pt-24">
+      <div className="min-h-screen bg-gray-100">
         <div className="container mx-auto p-8">
           <div className="flex flex-col lg:flex-row items-center lg:justify-between">
             <div className="lg:w-1/2 mr-2">

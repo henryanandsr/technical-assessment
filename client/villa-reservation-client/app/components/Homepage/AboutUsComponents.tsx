@@ -1,6 +1,7 @@
 import React from "react";
 import aboutUs from "../../assets/aboutUs.webp";
 import Link from "next/link";
+import { Button } from "@material-tailwind/react";
 function AboutUsComponents() {
   return (
     <div className="flex flex-col md:flex-row items-center justify-center m-20">
@@ -21,9 +22,11 @@ function AboutUsComponents() {
           It has survived not only five centuries, but also the leap into
           electronic typesetting, remaining essentially unchanged.{" "}
         </p>
-        <Link href="/aboutus" className="px-7 py-3 bg-primary text-white">
-          About Us
-        </Link>
+        <Button placeholder={"About Us"} className="px-7 py-3 bg-primary text-white">
+          <Link href="/aboutus">
+            About Us
+          </Link>
+        </Button>
       </div>
     </div>
   );

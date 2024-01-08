@@ -2,6 +2,9 @@
 import React, { useEffect, useState } from "react";
 import axiosPrivate from "@/app/utils/api";
 import useRefreshToken from "@/app/utils/refresh";
+import { Button, Card, Input, Typography } from "@material-tailwind/react";
+import { FaUser } from "react-icons/fa";
+import { Alert } from "flowbite-react";
 
 function ProfileForm() {
   const axiosInstance = axiosPrivate();
@@ -14,6 +17,7 @@ function ProfileForm() {
         name: res.data.data.name,
         email: res.data.data.email,
         password: "",
+        confirmPassword: "",
       });
       setId(res.data.data.id);
     };
@@ -21,11 +25,14 @@ function ProfileForm() {
   }, []);
 
   const [id, setId] = useState("");
-
+  const [passwordDidNotMatch, setPasswordDidNotMatch] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
+    confirmPassword: "",
   });
 
   const handleChange = (e: any) => {
@@ -37,6 +44,13 @@ function ProfileForm() {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
+    if (formData.password !== formData.confirmPassword) {
+      setPasswordDidNotMatch(true);
+      setTimeout(() => {
+        setPasswordDidNotMatch(false);
+      }, 3000);
+      return;
+    }
     const URI = process.env.SERVER_URL + "/api/user" + "/" + id;
     axiosInstance
       .put(URI, formData, { withCredentials: true })
@@ -45,66 +59,97 @@ function ProfileForm() {
         refresh();
         // refresh page
         window.location.reload();
-        alert("Profile updated successfully");
+        setSuccess(true);
+        setTimeout(() => {
+          setSuccess(false);
+        }, 3000);
       })
       .catch((error) => {
         console.log(error);
-        alert("Profile update failed");
+        setError(true);
+        setTimeout(() => {
+          setError(false);
+        }, 3000);
       });
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="bg-white p-8 rounded shadow-md w-96">
-        <h2 className="text-2xl font-bold mb-6">Profile Form</h2>
+    <div className="flex items-center justify-center">
+      <Card className="bg-white p-8 rounded shadow-md w-96" placeholder={"x"}>
+        <FaUser className="mr-2" size={30} />
+        <Typography className="text-2xl font-bold mb-6" placeholder={""}>
+          Profile
+        </Typography>
+        {passwordDidNotMatch ? (
+          <Alert className="" color="red">
+            Password not match
+          </Alert>
+        ) : null}
+        {success ? (
+          <Alert className="" color="green">
+            Profile updated successfully
+          </Alert>
+        ) : null}
+        {error ? (
+          <Alert className="" color="red">
+            Error updating profile
+          </Alert>
+        ) : null}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block text-sm font-semibold text-gray-600">
-              Name
-            </label>
-            <input
-              type="text"
+            <Input
               name="name"
+              label="Name"
               value={formData.name}
               onChange={handleChange}
-              className="w-full border border-gray-300 px-3 py-2 rounded"
               required
+              crossOrigin={undefined}
             />
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-semibold text-gray-600">
-              Email
-            </label>
-            <input
-              type="email"
+            <Input
               name="email"
+              label="Email"
               value={formData.email}
               onChange={handleChange}
               className="w-full border border-gray-300 px-3 py-2 rounded"
               required
+              crossOrigin={undefined}
             />
           </div>
-          <div className="mb-6">
-            <label className="block text-sm font-semibold text-gray-600">
-              Password
-            </label>
-            <input
+          <div className="mb-4">
+            <Input
               type="password"
+              label="Password"
               name="password"
               value={formData.password}
               onChange={handleChange}
               className="w-full border border-gray-300 px-3 py-2 rounded"
               required
+              crossOrigin={undefined}
             />
           </div>
-          <button
+          <div className="mb-6">
+            <Input
+              type="password"
+              label="Confirm Password"
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              className="w-full border border-gray-300 px-3 py-2 rounded"
+              required
+              crossOrigin={undefined}
+            />
+          </div>
+          <Button
             type="submit"
             className="w-full bg-tertiary text-white py-2 rounded hover:bg-tertiary-dark transition duration-300"
+            placeholder={"Submit"}
           >
-            Submit
-          </button>
+            Edit Profile
+          </Button>
         </form>
-      </div>
+      </Card>
     </div>
   );
 }

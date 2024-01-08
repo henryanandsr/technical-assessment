@@ -1,8 +1,9 @@
-'use client';
+"use client";
 import React, { useState } from "react";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/navigation";
+import { Button, Input } from "@material-tailwind/react";
 
 const RegisterForm = () => {
   const Router = useRouter();
@@ -32,8 +33,7 @@ const RegisterForm = () => {
       setPasswordMatch(false);
       setTimeout(() => {
         setPasswordMatch(true);
-      }
-      , 2000);
+      }, 2000);
       return;
     }
 
@@ -73,69 +73,52 @@ const RegisterForm = () => {
             Registration successful!
           </div>
         )}
-        {
-          !passwordMatch && (
-            <div className="mt-4 p-2 bg-red-200 text-red-800 rounded-md mb-2">
-              Passwords do not match!
-            </div>
-          )
-        }
+        {!passwordMatch && (
+          <div className="mt-4 p-2 bg-red-200 text-red-800 rounded-md mb-2">
+            Passwords do not match!
+          </div>
+        )}
         <div className="mb-4">
-          <label
-            htmlFor="name"
-            className="block text-sm font-medium text-gray-600"
-          >
-            Name
-          </label>
-          <input
+          <Input
+            label="Name"
             type="text"
             id="name"
             name="name"
             value={formData.name}
             onChange={handleChange}
-            className="mt-1 p-2 w-full border rounded-md"
             required
+            crossOrigin={undefined}
           />
         </div>
         <div className="mb-4">
-          <label
-            htmlFor="email"
-            className="block text-sm font-medium text-gray-600"
-          >
-            Email
-          </label>
-          <input
+          <Input
+            label="Email"
             type="email"
             id="email"
             name="email"
             value={formData.email}
             onChange={handleChange}
-            className="mt-1 p-2 w-full border rounded-md"
             required
+            crossOrigin={undefined}
           />
         </div>
         <div className="mb-4">
-          <label
-            htmlFor="password"
-            className="block text-sm font-medium text-gray-600"
-          >
-            Password
-          </label>
           <div className="relative">
-            <input
+            <Input
+              label="Password"
               type={showPassword ? "text" : "password"}
               id="password"
               name="password"
               value={formData.password}
               onChange={handleChange}
-              className="mt-1 p-2 w-full border rounded-md pr-10"
               placeholder="Enter your password"
               required
+              crossOrigin={undefined}
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute top-1/2 right-2 transform -translate-y-1/3 -translate-x-1/3 text-sm text-gray-600 cursor-pointer"
+              className="absolute top-1/2 right-2 transform -translate-y-1/2 -translate-x-1/3 text-sm text-gray-600 cursor-pointer"
             >
               {showPassword ? (
                 <FontAwesomeIcon icon={faEyeSlash} />
@@ -146,27 +129,22 @@ const RegisterForm = () => {
           </div>
         </div>
         <div className="mb-4">
-          <label
-            htmlFor="confirmPassword"
-            className="block text-sm font-medium text-gray-600"
-          >
-            Confirm Password
-          </label>
           <div className="relative">
-            <input
+            <Input
+              label="Confirm Password"
               type={showConfirmPassword ? "text" : "password"}
               id="confirmPassword"
               name="confirmPassword"
               value={formData.confirmPassword}
               onChange={handleChange}
-              className="mt-1 p-2 w-full border rounded-md pr-10"
               placeholder="Confirm your password"
               required
+              crossOrigin={undefined}
             />
             <button
               type="button"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              className="absolute top-1/2 right-2 transform -translate-y-1/3 -translate-x-1/3 text-sm text-gray-600 cursor-pointer"
+              className="absolute top-1/2 right-2 transform -translate-y-1/2 -translate-x-1/3 text-sm text-gray-600 cursor-pointer"
             >
               {showConfirmPassword ? (
                 <FontAwesomeIcon icon={faEyeSlash} />
@@ -176,12 +154,13 @@ const RegisterForm = () => {
             </button>
           </div>
         </div>
-        <button
+        <Button
           type="submit"
-          className="bg-primary text-white px-4 py-2 rounded-md hover:bg-orange-600"
+          className="bg-primary text-white px-4 py-2 rounded-md hover:bg-orange-600 w-full"
+          placeholder={"Submit"}
         >
           Register
-        </button>
+        </Button>
       </form>
     </div>
   );
