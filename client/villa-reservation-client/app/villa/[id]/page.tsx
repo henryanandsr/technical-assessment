@@ -8,6 +8,8 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import OpenStreetMap from "@/app/components/map/OpenStreetMap";
 import { Button, Typography } from "@material-tailwind/react";
+import Image from "next/image";
+
 interface Villa {
   id: string;
   name: string;
@@ -84,11 +86,13 @@ function VillaDetails() {
                     </Typography>
 
                     <Link href={`/villa/checkout/${id}`}>
-                      <Button placeholder={""} className="bg-tertiary">Book Now</Button>
+                      <Button placeholder={""} className="bg-tertiary">
+                        Book Now
+                      </Button>
                     </Link>
                   </div>
                 </div>
-                <img
+                <Image
                   src={displayImage(villa.images[0].data.data)}
                   alt={villa.name}
                   className="mb-8 rounded-md shadow-lg w-full"
@@ -103,8 +107,8 @@ function VillaDetails() {
                   <div className="bg-white p-4 rounded-md">
                     <h2 className="font-bold text-xl mb-4">Amenities</h2>
                     <ul className="list-disc list-inside">
-                      {villa.amenities.map((amenity) => (
-                        <li className="mb-2 text-sm">{amenity}</li>
+                      {villa.amenities.map((amenity, index) => (
+                        <li key={index} className="mb-2 text-sm">{amenity}</li>
                       ))}
                     </ul>
                   </div>
