@@ -5,16 +5,18 @@ import useAxiosPrivate from "@/app/utils/api";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCalendarAlt,
+  faMinus,
+  faPlus,
+} from "@fortawesome/free-solid-svg-icons";
 import {
   Card,
   CardBody,
   CardHeader,
   Typography,
-  Button
+  Button,
 } from "@material-tailwind/react";
-import { FaMinus, FaPlus } from 'react-icons/fa';
-
 
 interface Villa {
   id: string;
@@ -211,7 +213,7 @@ function CheckoutVillaComponent() {
                 className="bg-primary hover:bg-orange-700 text-white font-bold  rounded"
                 placeholder={"minus button"}
               >
-                <FaMinus />
+                <FontAwesomeIcon icon={faMinus} />
               </Button>
               <span className="text-xl">{guests}</span>
               <Button
@@ -219,7 +221,7 @@ function CheckoutVillaComponent() {
                 className="bg-primary hover:bg-orange-700 text-white font-bold rounded"
                 placeholder={"plus button"}
               >
-                <FaPlus />
+                <FontAwesomeIcon icon={faPlus} />
               </Button>
             </div>
           </div>

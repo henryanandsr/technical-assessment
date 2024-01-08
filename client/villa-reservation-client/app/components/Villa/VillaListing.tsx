@@ -4,8 +4,8 @@ import useAxiosPrivate from "@/app/utils/api";
 import Link from "next/link";
 import villaListing from "../../assets/villa-listing.jpg";
 import MultiSelectDropdown from "./MultiSelectDropdown";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-
+import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   Button,
@@ -456,7 +456,7 @@ function VillaListing() {
             placeholder={"Previous Page"}
             className="bg-primary"
           >
-            <FaArrowLeft />
+            <FontAwesomeIcon icon={faArrowLeft} />
           </Button>
           <Typography className="mx-2" placeholder={"Page"}>
             Page {searchParams.get("page") || 1}
@@ -476,7 +476,7 @@ function VillaListing() {
             }
             className="bg-primary"
           >
-            <FaArrowRight />
+            <FontAwesomeIcon icon={faArrowRight} />
           </Button>
         </div>
       </div>

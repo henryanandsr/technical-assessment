@@ -20,8 +20,6 @@
     "@types/react-leaflet": "^3.0.0",
     "@types/react-slick": "^0.23.13",
     "axios": "^1.6.3",
-    "flowbite": "^2.2.1",
-    "flowbite-react": "^0.7.2",
     "js-cookie": "^3.0.5",
     "leaflet": "^1.9.4",
     "leaflet-defaulticon-compatibility": "^0.1.2",

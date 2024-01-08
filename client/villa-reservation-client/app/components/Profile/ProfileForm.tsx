@@ -2,9 +2,15 @@
 import React, { useEffect, useState } from "react";
 import axiosPrivate from "@/app/utils/api";
 import useRefreshToken from "@/app/utils/refresh";
-import { Button, Card, Input, Typography } from "@material-tailwind/react";
-import { FaUser } from "react-icons/fa";
-import { Alert } from "flowbite-react";
+import {
+  Button,
+  Card,
+  Input,
+  Typography,
+  Alert,
+} from "@material-tailwind/react";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function ProfileForm() {
   const axiosInstance = axiosPrivate();
@@ -76,7 +82,7 @@ function ProfileForm() {
   return (
     <div className="flex items-center justify-center">
       <Card className="bg-white p-8 rounded shadow-md w-96" placeholder={"x"}>
-        <FaUser className="mr-2" size={30} />
+        <FontAwesomeIcon icon={faUser} />
         <Typography className="text-2xl font-bold mb-6" placeholder={""}>
           Profile
         </Typography>
