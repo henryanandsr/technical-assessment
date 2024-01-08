@@ -6,7 +6,6 @@ function BookingPage() {
   return (
     <>
       <NavigationBar />
-      <div>BookingPage</div>
       <TransactionList />
     </>
   );

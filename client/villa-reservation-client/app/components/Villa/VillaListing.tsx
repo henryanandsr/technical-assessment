@@ -203,7 +203,7 @@ function VillaListing() {
   };
 
   return (
-    <div className="mt-24">
+    <div className="">
       <div className="relative">
         <img src={villaListing.src} alt="" />
         <div className="absolute inset-0 bg-black opacity-50"></div>

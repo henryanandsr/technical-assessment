@@ -3,16 +3,15 @@ import aboutUs from "../../assets/aboutUs.webp";
 import Link from "next/link";
 function AboutUsComponents() {
   return (
-    <div className="flex items-center justify-center m-20">
+    <div className="flex flex-col md:flex-row items-center justify-center m-20">
       {/* Image on the left */}
       <img
         src={aboutUs.src}
         alt="Villa Image"
-        className="w-1/2 rounded-md shadow-lg object-cover"
+        className="w-full md:w-1/2 rounded-md shadow-lg object-cover mb-8 md:mb-0 md:mr-8"
       />
-
       {/* Text on the right */}
-      <div className="w-1/2 p-8">
+      <div className="w-full md:w-1/2 p-8">
         <p className="text-gray-700 mb-4">
           Lorem Ipsum is simply dummy text of the printing and typesetting
           industry

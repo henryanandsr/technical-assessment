@@ -1,40 +1,39 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPhone, faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { Typography } from "@material-tailwind/react";
 
 function Footer() {
   return (
-    <div className="bg-bg1 px-20 py-16">
-      <div className="bg-bg1 grid grid-cols-3">
-        <div className="text-4xl text-tertiary font-bold">LOGO</div>
-        <div>
-          <h2 className="text-xl font-bold mb-4">Contact Us</h2>
-          <div className="flex items-center mb-2">
-            <FontAwesomeIcon
-              icon={faPhone}
-              className="text-tertiary mr-2 h-5"
-            />
-            +1 (123) 456-7890
-          </div>
-          <div className="flex items-center">
-            <FontAwesomeIcon
-              icon={faEnvelope}
-              className="text-tertiary mr-2 h-5"
-            />
-            info@example.com
-          </div>
-        </div>
-        <div>
-          <h2 className="text-xl font-bold mb-4">Additional Info</h2>
-          <p>Address: 123 Main Street, Cityville</p>
-          <p>Follow us on social media</p>
-        </div>
-      </div>
-      <div className="text-center mt-10">
-        © 2024 Destiny Hotels & VillasWebsite Design & Development by Island
-        Media Management
-      </div>
-    </div>
+    <footer className="flex w-full flex-row flex-wrap items-center justify-center gap-y-6 gap-x-12 border-t border-blue-gray-50 py-6 text-center md:justify-between p-4">
+      <Typography color="blue-gray" className="font-normal" placeholder={"Material"}>
+        &copy; 2024 Villa Reservation
+      </Typography>
+      <ul className="flex flex-wrap items-center gap-y-2 gap-x-8">
+        <li>
+          <Typography
+            as="a"
+            href="/aboutus"
+            color="blue-gray"
+            className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
+            placeholder={"about"}
+          >
+            About Us
+          </Typography>
+        </li>
+        <li>
+          <Typography
+            as="a"
+            href="#"
+            color="blue-gray"
+            className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
+            placeholder={"Contact"}
+          >
+            Contact Us
+          </Typography>
+        </li>
+      </ul>
+    </footer>
   );
 }
 

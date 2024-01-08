@@ -54,7 +54,7 @@ function VillaDetails() {
   };
 
   return (
-    <div className="mt-24 bg-bg1">
+    <div className="bg-bg1">
       <NavigationBar />
       {villa ? (
         <div className="container mx-auto px-20 py-10">

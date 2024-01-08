@@ -7,7 +7,15 @@ import AboutUsComponents from "./components/Homepage/AboutUsComponents";
 import Footer from "./components/Homepage/Footer";
 import MultiSelectDropdown from "./components/Villa/MultiSelectDropdown";
 import useAxiosPrivate from "./utils/api";
-import { ThemeProvider } from "@material-tailwind/react";
+import {
+  ThemeProvider,
+  Typography,
+  Card,
+  Input,
+  Select,
+  Option,
+  Button,
+} from "@material-tailwind/react";
 
 interface Villa {
   id: string;
@@ -97,6 +105,12 @@ const Home = () => {
     console.log("params", params.toString());
     Router.push(`/villa?${params.toString()}` + "&page=1" + "&itemsPerPage=10");
   };
+  const handleCityChange = (value: string | undefined) => {
+    if (value) {
+      setCity(value);
+    }
+  };
+
   return (
     <ThemeProvider>
       <NavigationBar />
@@ -109,103 +123,153 @@ const Home = () => {
         <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50"></div>
 
         <div>
-          <h1 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-7xl font-bold text-white">
+          <Typography
+            className="absolute top-32 md:top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold text-white text-center"
+            placeholder={"h1"}
+          >
             Welcome to Villa Reservation
-          </h1>
-          <div className="relative">
-            <div className="absolute top-2/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-4 bg-white flex flex-col">
+          </Typography>
+          <Card
+            className="absolute top-2/3 md:top-2/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-4 bg-white"
+            placeholder={"form"}
+            color="transparent"
+            shadow={false}
+          >
+            <div className="">
+              <Typography
+                variant="h6"
+                color="blue-gray"
+                className="mb-2"
+                placeholder={"Villa Name"}
+              >
+                Villa Name
+              </Typography>
+              <Input
+                type="text"
+                size="lg"
+                value={searchQuery || ""}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="focus:border-none"
+                labelProps={{
+                  className: "before:content-none after:content-none",
+                }}
+                crossOrigin={undefined}
+              />
+            </div>
+            <div className="flex flex-col space-y-2 lg:space-y-0 lg:flex-row mt-2 space-x-4">
+              <div className="w-full lg:w-auto">
+                <Select
+                  onChange={(e) => {
+                    setCountry(e as string);
+                    setCity((prevCity) => {
+                      if (prevCity !== null) {
+                        return null;
+                      }
+                      return prevCity;
+                    });
+                  }}
+                  label="Select Country"
+                  placeholder={""}
+                  animate={{
+                    mount: { y: 0 },
+                    unmount: { y: 25 },
+                  }}
+                >
+                  {Array.from(countries).map((country: string, index) => (
+                    <Option key={`country-${index}`} value={country}>
+                      {country}
+                    </Option>
+                  ))}
+                </Select>
+              </div>
               <div className="">
-                <input
-                  type="text"
-                  placeholder="Search by name..."
-                  value={searchQuery || ""}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="border border-gray-300 px-4 py-2 w-full"
+                <Select
+                  onChange={(e) => {
+                    setCountry(e as string);
+                    setCity((prevCity) => {
+                      if (prevCity !== null) {
+                        return null;
+                      }
+                      return prevCity;
+                    });
+                  }}
+                  label="Select Country"
+                  placeholder={""}
+                  animate={{
+                    mount: { y: 0 },
+                    unmount: { y: 25 },
+                  }}
+                >
+                  {Array.from(countries).map((country: string, index) => (
+                    <Option key={`country-${index}`} value={country}>
+                      {country}
+                    </Option>
+                  ))}
+                </Select>
+              </div>
+              <div className="">
+                <Select
+                  key={country}
+                  onChange={handleCityChange}
+                  label="Select City"
+                  placeholder={""}
+                  animate={{
+                    mount: { y: 0 },
+                    unmount: { y: 25 },
+                  }}
+                >
+                  {Array.from(cities).map((city: string, index) => (
+                    <Option key={`city-${index}`} value={city}>
+                      {city}
+                    </Option>
+                  ))}
+                </Select>
+              </div>
+              <div className="">
+                <Input
+                  type="number"
+                  label="Price Low"
+                  placeholder=""
+                  value={priceLow || ""}
+                  onChange={(e) => setPriceLow(parseInt(e.target.value))}
+                  crossOrigin={undefined}
+                  className="focus:border-none"
+                  labelProps={{
+                    className: "before:content-none after:content-none ml-1 ",
+                  }}
                 />
               </div>
-              <div className="flex flex-row mt-2 space-x-4">
-                <div>
-                  <label htmlFor="country" className="block">
-                    Country
-                  </label>
-                  <select
-                    name="country"
-                    id="country"
-                    value={country || ""}
-                    onChange={(e) => {
-                      setCountry(e.target.value);
-                      setCity(null);
-                    }}
-                    className="border border-gray-300 px-4 py-2"
-                  >
-                    <option value="">Select a country</option>
-                    {Array.from(countries).map((country: string, index) => (
-                      <option key={`country-${index}`} value={country}>
-                        {country}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div>
-                  <label htmlFor="city" className="block">
-                    City
-                  </label>
-                  <select
-                    name="city"
-                    id="city"
-                    value={city || ""}
-                    onChange={(e) => setCity(e.target.value)}
-                    className="border border-gray-300 px-4 py-2"
-                  >
-                    <option value="">Select a city</option>
-                    {Array.from(cities).map((city: string, index) => (
-                      <option key={`city-${index}`} value={city}>
-                        {city}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div>
-                  <label htmlFor="priceLow" className="block">
-                    Price Low
-                  </label>
-                  <input
-                    type="number"
-                    placeholder="Search by price low..."
-                    value={priceLow || ""}
-                    onChange={(e) => setPriceLow(parseInt(e.target.value))}
-                    className="border border-gray-300 px-4 py-2 "
-                  />
-                </div>
-                <div className="flex flex-col justify-end">
-                  <label htmlFor="priceHigh" className="block">
-                    Price High
-                  </label>
-                  <input
-                    type="number"
-                    placeholder="Search by price high..."
-                    value={priceHigh || ""}
-                    onChange={(e) => setPriceHigh(parseInt(e.target.value))}
-                    className="border border-gray-300 px-4 py-2 "
-                  />
-                </div>
-                <div className="flex flex-col justify-end">
-                  <MultiSelectDropdown
-                    formFieldName="Amenities"
-                    options={amenitiesOptions}
-                    selectedItems={amenities}
-                    onSelectionChange={handleAmenitiesChange}
-                  />
-                </div>
+              <div className="">
+                <Input
+                  type="number"
+                  label="Price High"
+                  placeholder=""
+                  value={priceHigh || ""}
+                  onChange={(e) => setPriceHigh(parseInt(e.target.value))}
+                  className="focus:border-none"
+                  crossOrigin={undefined}
+                  labelProps={{
+                    className: "before:content-none after:content-none ml-1 ",
+                  }}
+                />
               </div>
-              <button
-                onClick={handleSubmit}
-                className="mt-2 py-2 w-full rounded-md bg-tertiary text-white"
-              >
-                Search
-              </button>
+              <div className="">
+                <MultiSelectDropdown
+                  formFieldName="Amenities"
+                  options={amenitiesOptions}
+                  selectedItems={amenities}
+                  onSelectionChange={handleAmenitiesChange}
+                />
+              </div>
             </div>
-          </div>
+            <Button
+              onClick={handleSubmit}
+              className="mt-2 py-2 w-full lg:w-auto rounded-md bg-tertiary text-white"
+              placeholder={"Search"}
+            >
+              Search
+            </Button>
+          </Card>
         </div>
       </div>
       <AboutUsComponents />

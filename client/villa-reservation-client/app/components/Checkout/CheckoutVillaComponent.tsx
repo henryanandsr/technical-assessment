@@ -112,7 +112,7 @@ function CheckoutVillaComponent() {
   }, []);
 
   return (
-    <div className="mt-24 container mx-auto px-20">
+    <div className="container mx-auto px-20">
       <div className="">
         <div className="font-bold text-4xl text-center mb-5 pt-5">Checkout</div>
         {/* Display Villa */}

@@ -14,11 +14,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import {
   Navbar,
-  MobileNav,
   Typography,
   Button,
   IconButton,
-  Card,
+  Collapse
 } from "@material-tailwind/react";
 
 function NavigationBar() {
@@ -148,7 +147,7 @@ function NavigationBar() {
           )}
         </IconButton>
       </div>
-      <MobileNav open={openNav}>{navList}</MobileNav>
+      <Collapse open={openNav}>{navList}</Collapse>
     </Navbar>
   );
 }
