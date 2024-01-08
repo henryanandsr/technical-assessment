@@ -83,7 +83,7 @@ function TransactionList() {
   };
 
   return (
-    <div className="container mx-auto py-8 px-20">
+    <div className="container mx-auto py-8 px-5 md:px-20">
       <h1 className="text-3xl font-bold mb-6">Transaction List</h1>
       {transaction.map((transaction) => (
         <Link key={transaction.id} href={`/booking/${transaction.id}`}>
