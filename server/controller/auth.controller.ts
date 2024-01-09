@@ -68,6 +68,7 @@ export const handleLogin = async (
           findUser.name as string
         );
         res.cookie("accessToken", accessToken, {
+          sameSite: "none",
           maxAge: 1 * 60 * 2000,
         });
         const refreshToken = jwt.sign(
@@ -252,6 +253,7 @@ export const handleRefreshToken = async (
     );
     res.cookie("accessToken", accessToken, {
       maxAge: 1 * 60 * 1000,
+      sameSite: "none",
     });
     res.status(200).json({
       status: "success",
