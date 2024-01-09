@@ -1,0 +1,18 @@
+version: "2.4"
+
+services:
+  villa-client:
+    image: gcr.io/villa-reservation/villa-client:latest
+    ports:
+      - "3000:3000"
+    depends_on:
+      - villa-server
+
+  villa-server:
+    image: gcr.io/villa-reservation/villa-server:latest
+    ports:
+      - "8080:8080"
+    environment:
+      - DATABASE_URL=mongodb+srv://henryanandseptianradityo2:rDBPtQTJSaB0QOGy@cluster0.eg4dfic.mongodb.net/villa-reservation
+      - ACCESS_TOKEN_SECRET=access_token_villa_reservation
+      - REFRESH_TOKEN_SECRET=refresh_token_villa_reservation

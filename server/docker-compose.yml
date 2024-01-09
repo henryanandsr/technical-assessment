@@ -1,0 +1,14 @@
+services:
+  villa-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - DATABASE_URL
+      - ACCESS_TOKEN_SECRET
+      - REFRESH_TOKEN_SECRET
+    env_file:
+      - .env
+    ports:
+      - 8080:8080
+    restart: always
