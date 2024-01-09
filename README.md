@@ -30,6 +30,7 @@ Technologies Used
 - Authentication: JWT
 - Styling: CSS-in-JS
 - Map Integration: Leaflet
+- API Documentation: Swagger
 
 ## Run
 Clone this repository
@@ -58,3 +59,6 @@ docker-compose up
 
 ## Live Demo
 You can view a live demo of the project at [Live Demo](https://technical-assessment-eta.vercel.app).
+
+## API Documentation
+You can view API Documentation at [API Documentation](https://technical-assessment-production.up.railway.app/api-docs/)
