@@ -70,6 +70,7 @@ export const handleLogin = async (
         res.cookie("accessToken", accessToken, {
           sameSite: "none",
           maxAge: 1 * 60 * 2000,
+          secure: true,
         });
         const refreshToken = jwt.sign(
           {
@@ -254,6 +255,7 @@ export const handleRefreshToken = async (
     res.cookie("accessToken", accessToken, {
       maxAge: 1 * 60 * 1000,
       sameSite: "none",
+      secure: true,
     });
     res.status(200).json({
       status: "success",
