@@ -5,7 +5,7 @@ WORKDIR /app
 COPY package*.json ./
 COPY yarn.lock ./
 COPY ./prisma/schema.prisma ./prisma/
-COPY .env ./
+# COPY .env ./
 
 RUN yarn install
 RUN npx prisma generate

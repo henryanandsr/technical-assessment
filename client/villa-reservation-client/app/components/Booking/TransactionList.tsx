@@ -3,6 +3,8 @@ import useAxiosPrivate from "@/app/utils/api";
 import { Button } from "@material-tailwind/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 interface Transaction {
   id: string;
@@ -152,7 +154,7 @@ function TransactionList() {
           placeholder={"prev"}
           className="bg-tertiary"
         >
-          Previous
+          <FontAwesomeIcon icon={faArrowLeft}/>
         </Button>
         <Button
           onClick={handleNextPage}
@@ -160,7 +162,7 @@ function TransactionList() {
           placeholder={"next"}
           className="bg-tertiary"
         >
-          Next
+          <FontAwesomeIcon icon={faArrowRight}/>
         </Button>
       </div>
     </div>
