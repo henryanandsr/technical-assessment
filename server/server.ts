@@ -5,7 +5,7 @@ import cors from "cors";
 import { verifyJWT } from "./middleware/verifyJWT";
 
 const app = express();
-const PORT = 8080;
+const PORT = process.env.PORT || 5000;
 
 const userRoutes = require("./routes/user.routes");
 const villaRoutes = require("./routes/villa.routes");
@@ -14,7 +14,7 @@ const transactionRoutes = require("./routes/transaction.routes");
 const userProtectedRoutes = require("./routes/userProtected.routes");
 
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: process.env.CLIENT_URL,
   credentials: true,
 };
 app.use(cors(corsOptions));
