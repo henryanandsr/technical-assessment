@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { Amenity } from "@prisma/client";
-import fetch from "node-fetch";
 import axios from "axios";
+import bcrypt from "bcrypt";
 // const fetch = require("node-fetch");
 const prisma = new PrismaClient();
 
@@ -30,6 +30,11 @@ interface GeoNamesApiResponse {
   };
 }
 
+interface User {
+  email: string;
+  name: string;
+  password: string;
+}
 const generateRandomImage = async () => {
   try {
     const imageId = Math.floor(Math.random() * 1000);
@@ -128,4 +133,24 @@ const seedData = async () => {
   }
 };
 
+const seedUsers = async () => {
+  const users: Partial<User>[] = [
+    {
+      email: "admin@admin.com",
+      name: "Admin",
+      password: bcrypt.hashSync("Admin123", 10),
+    },
+  ];
+
+  for (const user of users) {
+    try {
+      await prisma.user.create({ data: user as User });
+      console.log(`User ${user.email} seeded successfully`);
+    } catch (error) {
+      console.error(`Error seeding user ${user.email}:`, error);
+    }
+  }
+};
+
+seedUsers().finally(() => prisma.$disconnect());
 seedData();
