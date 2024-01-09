@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, Card, Input } from "@material-tailwind/react";
+import { Alert, Button, Card, Input } from "@material-tailwind/react";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
@@ -41,14 +41,14 @@ function LoginForm() {
       <h2 className="text-2xl font-bold mb-4 text-primary">Login</h2>
       <form onSubmit={handleSubmit}>
         {showSuccessNotification && (
-          <div className="mt-4 p-2 bg-green-200 text-green-800 rounded-md mb-2">
+          <Alert color="green" className="mb-2">
             Login successful!
-          </div>
+          </Alert>
         )}
         {showErrorNotification && (
-          <div className="mt-4 p-2 bg-red-200 text-red-800 rounded-md mb-2">
+          <Alert color="red" className="mb-2">
             Invalid email or password. Please try again.
-          </div>
+          </Alert>
         )}
         <div className="mb-4">
           <Input

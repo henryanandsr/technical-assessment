@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/navigation";
-import { Button, Input } from "@material-tailwind/react";
+import { Alert, Button, Input } from "@material-tailwind/react";
 
 const RegisterForm = () => {
   const Router = useRouter();
@@ -14,6 +14,7 @@ const RegisterForm = () => {
     confirmPassword: "",
   });
   const [passwordMatch, setPasswordMatch] = useState(true);
+  const [passwordError, setPasswordError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [showSuccessNotification, setShowSuccessNotification] = useState(false);
@@ -23,11 +24,18 @@ const RegisterForm = () => {
       ...formData,
       [e.target.name]: e.target.value,
     });
+    if (e.target.name === "password" && e.target.value.length < 8) {
+      setPasswordError(true);
+    } else {
+      setPasswordError(false);
+    }
   };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-
+    if (passwordError) {
+      return;
+    }
     // Check if password and confirm password match
     if (formData.password !== formData.confirmPassword) {
       setPasswordMatch(false);
@@ -69,14 +77,15 @@ const RegisterForm = () => {
       <h2 className="text-2xl font-bold mb-4 text-primary">Register</h2>
       <form onSubmit={handleSubmit}>
         {showSuccessNotification && (
-          <div className="mt-4 p-2 bg-green-200 text-green-800 rounded-md mb-2">
+          <Alert color="green" className="mb-2">
             Registration successful!
-          </div>
+          </Alert>
         )}
-        {!passwordMatch && (
-          <div className="mt-4 p-2 bg-red-200 text-red-800 rounded-md mb-2">
-            Passwords do not match!
-          </div>
+        {!passwordMatch && <Alert color="red">Passwords do not match!</Alert>}
+        {passwordError && (
+          <Alert color="red" className="mb-2">
+            Password must be at least 8 characters long.
+          </Alert>
         )}
         <div className="mb-4">
           <Input

@@ -40,12 +40,18 @@ function ProfileForm() {
     password: "",
     confirmPassword: "",
   });
+  const [passwordError, setPasswordError] = useState(false);
 
   const handleChange = (e: any) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
+    if (e.target.name === "password" && e.target.value.length < 8) {
+      setPasswordError(true);
+    } else {
+      setPasswordError(false);
+    }
   };
 
   const handleSubmit = (e: any) => {
@@ -86,6 +92,11 @@ function ProfileForm() {
         <Typography className="text-2xl font-bold mb-6" placeholder={""}>
           Profile
         </Typography>
+        {passwordError ? (
+          <Alert className="mb-2" color="red">
+            Password must be at least 8 characters long.
+          </Alert>
+        ) : null}
         {passwordDidNotMatch ? (
           <Alert className="" color="red">
             Password not match
