@@ -116,7 +116,7 @@ const Home = () => {
     <ThemeProvider>
       <NavigationBar />
       <div className="relative">
-        <Image
+        <img
           src={heroImage.src}
           alt="Beautiful Landscape"
           className="mb-8 rounded-md shadow-lg w-full h-screen object-cover"
@@ -159,31 +159,6 @@ const Home = () => {
             </div>
             <div className="flex flex-col space-y-2 lg:space-y-0 lg:flex-row mt-2 space-x-4">
               <div className="w-full lg:w-auto">
-                <Select
-                  onChange={(e) => {
-                    setCountry(e as string);
-                    setCity((prevCity) => {
-                      if (prevCity !== null) {
-                        return null;
-                      }
-                      return prevCity;
-                    });
-                  }}
-                  label="Select Country"
-                  placeholder={""}
-                  animate={{
-                    mount: { y: 0 },
-                    unmount: { y: 25 },
-                  }}
-                >
-                  {Array.from(countries).map((country: string, index) => (
-                    <Option key={`country-${index}`} value={country}>
-                      {country}
-                    </Option>
-                  ))}
-                </Select>
-              </div>
-              <div className="">
                 <Select
                   onChange={(e) => {
                     setCountry(e as string);

@@ -285,31 +285,6 @@ function VillaListing() {
             </div>
             <div className="">
               <Select
-                onChange={(e) => {
-                  setCountry(e as string);
-                  setCity((prevCity) => {
-                    if (prevCity !== null) {
-                      return null;
-                    }
-                    return prevCity;
-                  });
-                }}
-                label="Select Country"
-                placeholder={""}
-                animate={{
-                  mount: { y: 0 },
-                  unmount: { y: 25 },
-                }}
-              >
-                {Array.from(countries).map((country: string, index) => (
-                  <Option key={`country-${index}`} value={country}>
-                    {country}
-                  </Option>
-                ))}
-              </Select>
-            </div>
-            <div className="">
-              <Select
                 key={country}
                 onChange={handleCityChange}
                 label="Select City"
