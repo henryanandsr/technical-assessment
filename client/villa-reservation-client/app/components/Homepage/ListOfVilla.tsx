@@ -4,6 +4,7 @@ import axios from "axios";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Image from "next/image";
 
 interface Villa {
   id: string;
@@ -79,7 +80,7 @@ function ListOfVilla() {
               className="bg-white rounded-md overflow-hidden relative"
             >
               {villa.images && villa.images.length > 0 ? (
-                <img
+                <Image
                   src={displayImage(villa.images[0].data.data)}
                   alt={villa.name}
                   className="w-full h-[75vh] object-cover"

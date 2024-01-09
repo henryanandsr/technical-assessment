@@ -17,6 +17,7 @@ import {
   Typography,
   Button,
 } from "@material-tailwind/react";
+import Image from "next/image";
 
 interface Villa {
   id: string;
@@ -136,7 +137,7 @@ function CheckoutVillaComponent() {
             placeholder={""}
           >
             <CardHeader placeholder={""} className="">
-              <img
+              <Image
                 src={displayImage(villa.images[0].data.data)}
                 alt="Villa"
                 className="rounded-md w-full h-[35vh] mr-5 object-cover"

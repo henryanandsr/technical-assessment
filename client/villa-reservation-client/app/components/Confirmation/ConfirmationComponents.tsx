@@ -12,6 +12,7 @@ import {
   faConciergeBell,
 } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "@material-tailwind/react";
+import Image from "next/image";
 
 interface Transaction {
   id: String;
@@ -105,7 +106,7 @@ function ConfirmationComponents() {
       <div className="text-2xl mb-5 mt-5 font-bold">Confirmation Page</div>
       {transaction ? (
         <div className="flex flex-row bg-bg2 rounded-md shadow-md">
-          <img
+          <Image
             src={displayImage(transaction.villa.images[0].data.data)}
             alt={transaction.villa.name}
             className="w-full h-[50vh] object-cover"

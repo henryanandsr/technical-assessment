@@ -1,6 +1,6 @@
 import React from "react";
 import NavigationBar from "../components/NavigationBar";
-import aboutUsImage from "../assets/aboutUs.webp"; // Import your image
+import aboutUsImage from "../assets/aboutUs.webp";
 
 function AboutUsPage() {
   return (

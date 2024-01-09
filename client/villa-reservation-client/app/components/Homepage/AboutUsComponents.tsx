@@ -2,11 +2,12 @@ import React from "react";
 import aboutUs from "../../assets/aboutUs.webp";
 import Link from "next/link";
 import { Button } from "@material-tailwind/react";
+import Image from "next/image";
 function AboutUsComponents() {
   return (
     <div className="flex flex-col md:flex-row items-center justify-center m-20">
       {/* Image on the left */}
-      <img
+      <Image
         src={aboutUs.src}
         alt="Villa Image"
         className="w-full md:w-1/2 rounded-md shadow-lg object-cover mb-8 md:mb-0 md:mr-8"

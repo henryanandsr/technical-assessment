@@ -16,6 +16,7 @@ import {
   Option,
   Button,
 } from "@material-tailwind/react";
+import Image from "next/image";
 
 interface Villa {
   id: string;
@@ -115,7 +116,7 @@ const Home = () => {
     <ThemeProvider>
       <NavigationBar />
       <div className="relative">
-        <img
+        <Image
           src={heroImage.src}
           alt="Beautiful Landscape"
           className="mb-8 rounded-md shadow-lg w-full h-screen object-cover"
