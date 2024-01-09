@@ -71,6 +71,7 @@ export const handleLogin = async (
           sameSite: "none",
           maxAge: 1 * 60 * 2000,
           secure: true,
+          httpOnly: true,
         });
         const refreshToken = jwt.sign(
           {
@@ -256,6 +257,7 @@ export const handleRefreshToken = async (
       maxAge: 1 * 60 * 1000,
       sameSite: "none",
       secure: true,
+      httpOnly: true,
     });
     res.status(200).json({
       status: "success",
