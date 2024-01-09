@@ -5,7 +5,7 @@ import cors from "cors";
 import { verifyJWT } from "./middleware/verifyJWT";
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 
 const userRoutes = require("./routes/user.routes");
 const villaRoutes = require("./routes/villa.routes");
