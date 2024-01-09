@@ -1,5 +1,6 @@
 "use client";
 import useAxiosPrivate from "@/app/utils/api";
+import { Button } from "@material-tailwind/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -35,6 +36,17 @@ function TransactionList() {
   const [userId, setUserId] = useState("");
   const [transaction, setTransaction] = useState<Transaction[]>([]);
 
+  // set page for simple pagination
+  const [page, setPage] = useState(1);
+  const pageSize = 10;
+
+  const handleNextPage = () => {
+    setPage(page + 1);
+  };
+
+  const handlePrevPage = () => {
+    setPage(page - 1);
+  };
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -63,7 +75,10 @@ function TransactionList() {
             { withCredentials: true }
           );
           let transactions = res.data.data;
-          transactions = transactions.sort((a: Transaction, b: Transaction) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+          transactions = transactions.sort(
+            (a: Transaction, b: Transaction) =>
+              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          );
           setTransaction(transactions || []);
         }
       } catch (error) {
@@ -85,47 +100,69 @@ function TransactionList() {
   return (
     <div className="container mx-auto py-8 px-5 md:px-20">
       <h1 className="text-3xl font-bold mb-6">Transaction List</h1>
-      {transaction.map((transaction) => (
-        <Link key={transaction.id} href={`/booking/${transaction.id}`}>
-          <div className="mb-6 p-4 bg-white shadow-md rounded-md cursor-pointer transition-transform transform flex flex-row">
-            {transaction?.villa.images &&
-            transaction.villa.images.length > 0 ? (
-              <div className="w-1/2 mr-5">
-                <img
-                  src={displayImage(transaction.villa.images[0].data.data)}
-                  alt={transaction.villa.name}
-                  className="w-full h-[30vh] object-cover mb-4 rounded-md"
-                />
+      {transaction
+        .slice((page - 1) * pageSize, page * pageSize)
+        .map((transaction) => (
+          <Link key={transaction.id} href={`/booking/${transaction.id}`}>
+            <div className="mb-6 p-4 bg-white shadow-md rounded-md cursor-pointer transition-transform transform flex flex-row">
+              {transaction?.villa.images &&
+              transaction.villa.images.length > 0 ? (
+                <div className="w-1/2 mr-5">
+                  <img
+                    src={displayImage(transaction.villa.images[0].data.data)}
+                    alt={transaction.villa.name}
+                    className="w-full h-[30vh] object-cover mb-4 rounded-md"
+                  />
+                </div>
+              ) : (
+                <div className="w-full h-48 bg-gray-300 mb-4 rounded-md"></div>
+              )}
+              <div className="flex flex-col justify-center">
+                <div className="font-bold text-lg mb-2">
+                  {transaction.villa.name}
+                </div>
+                <div>
+                  Status:{" "}
+                  <span
+                    className={
+                      transaction.confirmed
+                        ? "text-green-700 font-bold"
+                        : "text-red-500 font-bold"
+                    }
+                  >
+                    {transaction.confirmed ? "Confirmed" : "Pending"}
+                  </span>
+                </div>
+                <div>
+                  Order At:{" "}
+                  {new Date(transaction.createdAt).toLocaleDateString("en-US", {
+                    day: "2-digit",
+                    month: "long",
+                    year: "numeric",
+                  })}
+                </div>{" "}
               </div>
-            ) : (
-              <div className="w-full h-48 bg-gray-300 mb-4 rounded-md"></div>
-            )}
-            <div className="flex flex-col justify-center">
-              <div className="font-bold text-lg mb-2">
-                {transaction.villa.name}
-              </div>
-              <div>
-                Status:{" "}
-                <span
-                  className={
-                    transaction.confirmed ? "text-green-700 font-bold" : "text-red-500 font-bold"
-                  }
-                >
-                  {transaction.confirmed ? "Confirmed" : "Pending"}
-                </span>
-              </div>
-              <div>
-                Order At:{" "}
-                {new Date(transaction.createdAt).toLocaleDateString("en-US", {
-                  day: "2-digit",
-                  month: "long",
-                  year: "numeric",
-                })}
-              </div>{" "}
             </div>
-          </div>
-        </Link>
-      ))}
+          </Link>
+        ))}
+      <div className="flex justify-between">
+        <Button
+          onClick={handlePrevPage}
+          disabled={page === 1}
+          placeholder={"prev"}
+          className="bg-tertiary"
+        >
+          Previous
+        </Button>
+        <Button
+          onClick={handleNextPage}
+          disabled={transaction.length <= page * pageSize}
+          placeholder={"next"}
+          className="bg-tertiary"
+        >
+          Next
+        </Button>
+      </div>
     </div>
   );
 }
