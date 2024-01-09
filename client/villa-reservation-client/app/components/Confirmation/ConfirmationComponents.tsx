@@ -11,7 +11,7 @@ import {
   faInfoCircle,
   faConciergeBell,
 } from "@fortawesome/free-solid-svg-icons";
-import { Button } from "@material-tailwind/react";
+import { Button, Spinner } from "@material-tailwind/react";
 import Image from "next/image";
 
 interface Transaction {
@@ -113,7 +113,7 @@ function ConfirmationComponents() {
           />
         </div>
       ) : (
-        <div>Loading...</div>
+        <Spinner color="blue" className="flex justify-center m-4" />
       )}
       <div className="flex flex-col md:flex-row w-full justify-between">
         <div className="p-5 flex flex-col justify-center bg-white w-full md:w-1/2 mt-3 rounded-md">
@@ -174,7 +174,7 @@ function ConfirmationComponents() {
         </div>
       </div>
       <Button
-        className={`bg-tertiary w-full mt-4 py-2 rounded-md text-white ${
+        className={`bg-tertiary mb-5 w-full mt-4 py-2 rounded-md text-white ${
           transaction?.confirmed ? "opacity-50 cursor-not-allowed" : ""
         }`}
         onClick={handleSubmit}

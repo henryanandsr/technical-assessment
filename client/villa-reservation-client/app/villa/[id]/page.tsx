@@ -7,7 +7,7 @@ import Link from "next/link";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import OpenStreetMap from "@/app/components/map/OpenStreetMap";
-import { Button, Typography } from "@material-tailwind/react";
+import { Button, Spinner, Typography } from "@material-tailwind/react";
 import Image from "next/image";
 
 interface Villa {
@@ -108,7 +108,9 @@ function VillaDetails() {
                     <h2 className="font-bold text-xl mb-4">Amenities</h2>
                     <ul className="list-disc list-inside">
                       {villa.amenities.map((amenity, index) => (
-                        <li key={index} className="mb-2 text-sm">{amenity}</li>
+                        <li key={index} className="mb-2 text-sm">
+                          {amenity}
+                        </li>
                       ))}
                     </ul>
                   </div>
@@ -124,7 +126,7 @@ function VillaDetails() {
           </div>
         </div>
       ) : (
-        <div>Loading...</div>
+        <Spinner color="blue" className="flex justify-center m-4" />
       )}
     </div>
   );

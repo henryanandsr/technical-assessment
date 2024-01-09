@@ -16,6 +16,7 @@ import {
   CardHeader,
   Typography,
   Button,
+  Spinner,
 } from "@material-tailwind/react";
 import Image from "next/image";
 
@@ -160,7 +161,7 @@ function CheckoutVillaComponent() {
             </div> */}
           </Card>
         ) : (
-          <div>Loading...</div>
+          <Spinner color="blue" className="flex justify-center m-4" />
         )}
         {/* Check In */}
         <div className="flex flex-col md:flex-row w-full bg-white rounded-md p-4 mt-5 shadow-lg justify-between">

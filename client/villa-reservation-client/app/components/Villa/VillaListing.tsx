@@ -16,6 +16,7 @@ import {
   Option,
   CardHeader,
   CardBody,
+  Spinner,
 } from "@material-tailwind/react";
 
 interface Villa {
@@ -391,7 +392,10 @@ function VillaListing() {
         </div>
         <div className="grid grid-cols-1 gap-8">
           {loading ? (
-            <div>Loading...</div>
+            <Spinner
+              color="blue"
+              className="flex justify-center m-4"
+            />
           ) : (
             <>
               {villas.map((villa, index) => (
@@ -400,11 +404,7 @@ function VillaListing() {
                   className="bg-white rounded-md overflow-hidden flex flex-col md:flex-row shadow-md"
                   placeholder={"villa"}
                 >
-                  <CardHeader
-                    color="blue"
-                    placeholder={"image"}
-                    className="relative h-56"
-                  >
+                  <CardHeader placeholder={"image"} className="relative h-56">
                     <Link href={"villa/" + villa.id}>
                       {villa.images && villa.images.length > 0 && (
                         <img
