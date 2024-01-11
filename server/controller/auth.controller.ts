@@ -203,8 +203,8 @@ export const handleLogout = async (
         refreshToken: "",
       },
     });
-    res.clearCookie("accessToken");
-    res.clearCookie("refreshToken");
+    res.clearCookie("accessToken", { secure: true, sameSite: "none" });
+    res.clearCookie("refreshToken", { secure: true, sameSite: "none" });
     res.status(200).json({
       status: "success",
       message: "Logout success",
